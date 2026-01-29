@@ -1,6 +1,8 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { supabaseServer } from "@/lib/supabase/server";
+import SignOutButton from "../components/SignOutButton";
+export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const isAdmin = (await cookies()).get("admin-auth")?.value;
@@ -9,19 +11,15 @@ export default async function AdminPage() {
     redirect("/admin-login");
   }
 
-  const { data } = await supabase
-    .from("rsvps")
-    .select("*")
-    .order("created_at", { ascending: false });
+const { data = [] } = await supabaseServer
+  .from("rsvps")
+  .select("*")
+  .order("created_at", { ascending: false });
+
 
   return (
     <main className="p-10">
-      <button
-  onClick={() => supabase.auth.signOut()}
-  className="text-sm text-neutral-500 hover:text-black"
->
-  Cerrar sesión
-</button>
+      <SignOutButton />
       <h1 className="text-3xl font-bold mb-6">
         Confirmaciones de asistencia
       </h1>
