@@ -1,0 +1,57 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function AdminLogin() {
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const login = async () => {
+    setError("");
+
+    const res = await fetch("/api/admin-login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password }),
+    });
+
+    if (!res.ok) {
+      setError("Contraseña incorrecta");
+      return;
+    }
+
+    router.push("/admin");
+  };
+
+  return (
+    <main className="h-screen flex items-center justify-center">
+      <div className="bg-white p-6 rounded-xl shadow w-80">
+        <h1 className="text-2xl font-bold mb-4">
+          Acceso privado 🔐
+        </h1>
+
+        <input
+          type="password"
+          placeholder="Contraseña"
+          className="border p-2 w-full mb-3"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        {error && (
+          <p className="text-red-600 text-sm mb-2">
+            {error}
+          </p>
+        )}
+
+        <button
+          onClick={login}
+          className="bg-black text-white w-full py-2 rounded"
+        >
+          Entrar
+        </button>
+      </div>
+    </main>
+  );
+}
