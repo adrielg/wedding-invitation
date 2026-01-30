@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import SignOutButton from "../components/SignOutButton";
+import * as XLSX from "xlsx"; 
 
 export default function AdminPage() {
   const router = useRouter();
@@ -42,6 +43,33 @@ export default function AdminPage() {
     checkAuthAndFetchData();
   }, [router]);
 
+    const exportToExcel = () => {
+    if (!data || data.length === 0) return;
+
+    const rows = data.map((rsvp) => ({
+      Nombre: rsvp.nombre,
+      Apellido: rsvp.apellido,
+      Asiste:
+        rsvp.asistencia === "si"
+          ? "Sí"
+          : rsvp.asistencia === "no"
+          ? "No"
+          : "Quizás",
+      "Menores a 5 años": rsvp.menores_cinco,
+      "Entre 5 y 10 años": rsvp.entre_cinco_diez,
+      "Mayores a 10 años": rsvp.mayores_diez,
+      "Restricciones alimentarias": rsvp.restricciones_alimentarias ?? "",
+      Comentario: rsvp.mensaje ?? "",
+      "Fecha creación": new Date(rsvp.created_at).toLocaleString("es-AR"),
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+    const workbook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, "RSVP");
+    XLSX.writeFile(workbook, "confirmaciones.xlsx");
+  };
+
 
   if (loading) {
     return (
@@ -57,6 +85,13 @@ export default function AdminPage() {
       <h1 className="text-3xl font-bold mb-6">
         Confirmaciones de asistencia
       </h1>
+      
+      <button
+        onClick={exportToExcel}
+        className="mb-6 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+      >
+        Exportar a Excel
+      </button>
 
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
@@ -71,24 +106,27 @@ export default function AdminPage() {
             key={rsvp.id}
             className="border p-4 rounded-lg bg-white shadow"
           >
-            <p><strong>Nombre:</strong> {rsvp.name}</p>
+            <p><strong>Nombre:</strong> {rsvp.nombre}</p>
+            <p><strong>Apellido:</strong> {rsvp.apellido}</p>
             <p>
               <strong>Asiste:</strong>{" "}
-              {rsvp.attends ? "Sí" : "No"}
+              {rsvp.asistencia === "si" ? "Sí" : rsvp.asistencia === "no" ? "No" : "Quizás"}
             </p>
 
-            {rsvp.attends && (
+            {rsvp.asistencia && (
               <>
-                <p><strong>Acompañantes:</strong> {rsvp.companions}</p>
+                <p><strong>Menores a 5 años:</strong> {rsvp.menores_cinco}</p>
+                <p><strong>Entre 5 y 10 años:</strong> {rsvp.entre_cinco_diez}</p>
+                <p><strong>Menores a 10 años:</strong> {rsvp.mayores_diez}</p>
                 <p>
-                  <strong>Comida:</strong>{" "}
-                  {rsvp.food_restrictions || "—"}
+                  <strong>Restricciones Alimentarias:</strong>{" "}
+                  {rsvp.restricciones_alimentarias || "—"}
                 </p>
               </>
             )}
 
-            {rsvp.comment && (
-              <p><strong>Comentario:</strong> {rsvp.comment}</p>
+            {rsvp.mensaje && (
+              <p><strong>Comentario:</strong> {rsvp.mensaje}</p>
             )}
           </div>
         ))}
@@ -97,3 +135,4 @@ export default function AdminPage() {
     </main>
   );
 }
+
