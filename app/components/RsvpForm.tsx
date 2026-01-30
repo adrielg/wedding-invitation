@@ -1,104 +1,286 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 
 export default function RsvpForm() {
-  const [name, setName] = useState("");
-  const [attends, setAttends] = useState<boolean | null>(null);
-  const [companions, setCompanions] = useState(0);
-  const [food, setFood] = useState("");
-  const [comment, setComment] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    nombre: "",
+    apellido: "",
+    asistencia: "si",
+    menoresCinco: "0",
+    entrecincodiez: "0",
+    mayoresdiez: "0",
+    restricciones: "",
+    mensaje: "",
+  });
 
-  const submit = async () => {
+  const [submitted, setSubmitted] = useState(false);
+  const [submittedType, setSubmittedType] = useState<string>("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
 
-    const { error } = await supabase.from("rsvps").insert({
-      name,
-      attends,
-      companions: attends ? companions : null,
-      food_restrictions: attends ? food : null,
-      comment,
-    });
+    try {
+      const { error } = await supabase.from("rsvps").insert([
+        {
+          nombre: formData.nombre,
+          apellido: formData.apellido,
+          asistencia: formData.asistencia,
+          menores_cinco: parseInt(formData.menoresCinco),
+          entre_cinco_diez: parseInt(formData.entrecincodiez),
+          mayores_diez: parseInt(formData.mayoresdiez),
+          restricciones_alimentarias: formData.restricciones || null,
+          mensaje: formData.mensaje || null,
+        },
+      ]);
 
-    setLoading(false);
+      if (error) {
+        console.error("Error:", error);
+        alert("Error al guardar el formulario");
+        return;
+      }
 
-    if (!error) {
-      setSuccess(true);
-    } else {
-      alert("Error al enviar la confirmación");
+      setSubmitted(true);
+      setSubmittedType(formData.asistencia);
+      setTimeout(() => {
+        setSubmitted(false);
+        setSubmittedType("");
+        setFormData({
+          nombre: "",
+          apellido: "",
+          asistencia: "si",
+          menoresCinco: "0",
+          entrecincodiez: "0",
+          mayoresdiez: "0",
+          restricciones: "",
+          mensaje: "",
+        });
+      }, 4000);
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (success) {
-    return <p className="text-xl text-green-600">¡Gracias por confirmar! 💚</p>;
-  }
+  const totalAcompanantes = parseInt(formData.menoresCinco) + parseInt(formData.entrecincodiez) + parseInt(formData.mayoresdiez);
 
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white p-6 rounded-xl shadow">
-      <h2 className="text-2xl font-bold mb-4">Confirmar asistencia</h2>
-
-      <input
-        className="w-full border p-2 mb-3 rounded"
-        placeholder="Nombre y apellido"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-
-      <div className="mb-3">
-        <button
-          className={`px-4 py-2 mr-2 rounded ${
-            attends === true ? "bg-black text-white" : "bg-gray-200"
-          }`}
-          onClick={() => setAttends(true)}
+    <motion.div
+      className="max-w-3xl mx-auto"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+    >
+      {submitted ? (
+        <motion.div
+          className="bg-green-50 border-2 border-green-500 text-green-700 p-6 rounded-lg text-center"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
         >
-          Sí asisto
-        </button>
-        <button
-          className={`px-4 py-2 rounded ${
-            attends === false ? "bg-black text-white" : "bg-gray-200"
-          }`}
-          onClick={() => setAttends(false)}
-        >
-          No puedo asistir
-        </button>
-      </div>
+          {submittedType === "si" && (
+            <>
+              <p className="text-lg font-semibold">✅ ¡Gracias por confirmar!</p>
+              <p className="mt-2">Te esperamos el 22 de Noviembre de 2026.</p>
+            </>
+          )}
+          {submittedType === "no" && (
+            <>
+              <p className="text-lg font-semibold">💔 Gracias de todas formas</p>
+              <p className="mt-2">Te vamos a extrañar en nuestro gran día.</p>
+            </>
+          )}
+          {submittedType === "quizas" && (
+            <>
+              <p className="text-lg font-semibold">⏰ Gracias por tu interés</p>
+              <p className="mt-2">Tienes tiempo hasta 1 mes antes de la boda para confirmar tu asistencia. ¡Sin presiones!</p>
+            </>
+          )}
+        </motion.div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-lg">
+          {/* Datos Personales */}
+          <div>
+            <h3 className="text-xl font-semibold text-rose-600 mb-4">Datos Personales</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <motion.div whileHover={{ scale: 1.02 }}>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Nombre *
+                </label>
+                <input
+                  type="text"
+                  name="nombre"
+                  value={formData.nombre}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition"
+                  placeholder="Tu nombre"
+                />
+              </motion.div>
 
-      {attends && (
-        <>
-          <input
-            type="number"
-            className="w-full border p-2 mb-3 rounded"
-            placeholder="Acompañantes"
-            value={companions}
-            onChange={(e) => setCompanions(Number(e.target.value))}
-          />
+              <motion.div whileHover={{ scale: 1.02 }}>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Apellido *
+                </label>
+                <input
+                  type="text"
+                  name="apellido"
+                  value={formData.apellido}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition"
+                  placeholder="Tu apellido"
+                />
+              </motion.div>
+            </div>
+          </div>
 
-          <textarea
-            className="w-full border p-2 mb-3 rounded"
-            placeholder="Intolerancias alimentarias"
-            value={food}
-            onChange={(e) => setFood(e.target.value)}
-          />
-        </>
+          {/* Asistencia */}
+          <div>
+            <h3 className="text-xl font-semibold text-rose-600 mb-4">Confirmación de Asistencia</h3>
+            <motion.div whileHover={{ scale: 1.02 }}>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                ¿Podrás asistir? *
+              </label>
+              <select
+                name="asistencia"
+                value={formData.asistencia}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition bg-white"
+              >
+                <option value="si">Sí, confirmo mi asistencia 🎉</option>
+                <option value="no">No puedo asistir 😞</option>
+                <option value="quizas">Aún no sé 🤔</option>
+              </select>
+            </motion.div>
+          </div>
+
+          {/* Acompañantes - Solo si confirma asistencia */}
+          {formData.asistencia === "si" && (
+            <div>
+              <h3 className="text-xl font-semibold text-rose-600 mb-4">Acompañantes</h3>
+              <p className="text-sm text-gray-600 mb-4">Especifica la cantidad de personas que te acompañarán</p>
+              <div className="grid md:grid-cols-3 gap-6">
+                <motion.div whileHover={{ scale: 1.02 }}>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Menores a 5 años
+                  </label>
+                  <select
+                    name="menoresCinco"
+                    value={formData.menoresCinco}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition bg-white"
+                  >
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4+</option>
+                  </select>
+                </motion.div>
+
+                <motion.div whileHover={{ scale: 1.02 }}>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Entre 5 a 10 años
+                  </label>
+                  <select
+                    name="entrecincodiez"
+                    value={formData.entrecincodiez}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition bg-white"
+                  >
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4+</option>
+                  </select>
+                </motion.div>
+
+                <motion.div whileHover={{ scale: 1.02 }}>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Mayores a 10 años
+                  </label>
+                  <select
+                    name="mayoresdiez"
+                    value={formData.mayoresdiez}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition bg-white"
+                  >
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4+</option>
+                  </select>
+                </motion.div>
+              </div>
+              <p className="text-sm text-gray-600 mt-3">
+                Total de acompañantes: <span className="font-semibold">{totalAcompanantes}</span>
+              </p>
+            </div>
+          )}
+
+          {/* Restricciones Alimentarias - Solo si confirma asistencia */}
+          {formData.asistencia === "si" && (
+            <div>
+              <h3 className="text-xl font-semibold text-rose-600 mb-4">Restricciones Alimentarias</h3>
+              <motion.div whileHover={{ scale: 1.02 }}>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  ¿Tienes alguna restricción dietética o alergia? (ej: celíaco, hipertenso, alérgico a frutos secos, etc.)
+                </label>
+                <textarea
+                  name="restricciones"
+                  value={formData.restricciones}
+                  onChange={handleChange}
+                  rows={3}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition"
+                  placeholder="Cuéntanos sobre tus restricciones alimentarias o alergias..."
+                />
+              </motion.div>
+            </div>
+          )}
+
+          {/* Comentario - Solo si no puede asistir */}
+          {formData.asistencia === "no" && (
+            <div>
+              <h3 className="text-xl font-semibold text-rose-600 mb-4">Mensaje (Opcional)</h3>
+              <motion.div whileHover={{ scale: 1.02 }}>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Si deseas, déjanos un comentario
+                </label>
+                <textarea
+                  name="mensaje"
+                  value={formData.mensaje}
+                  onChange={handleChange}
+                  rows={3}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition"
+                  placeholder="Déjanos un mensaje..."
+                />
+              </motion.div>
+            </div>
+          )}
+
+          <motion.button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-lg font-semibold hover:shadow-lg transition-shadow disabled:opacity-50"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {loading ? "Enviando..." : formData.asistencia === "si" ? "Confirmar Asistencia" : formData.asistencia === "no" ? "Enviar" : "Continuar"}
+          </motion.button>
+        </form>
       )}
-
-      <textarea
-        className="w-full border p-2 mb-3 rounded"
-        placeholder="Comentario"
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-      />
-
-      <button
-        disabled={loading || attends === null || !name}
-        onClick={submit}
-        className="w-full bg-black text-white py-2 rounded"
-      >
-        {loading ? "Enviando..." : "Enviar"}
-      </button>
-    </div>
+    </motion.div>
   );
 }

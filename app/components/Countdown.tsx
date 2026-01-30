@@ -1,13 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const EVENT_DATE = new Date("2026-11-22T12:30:00");
 
 export default function Countdown() {
   const [timeLeft, setTimeLeft] = useState("");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+
     const timer = setInterval(() => {
       const diff = EVENT_DATE.getTime() - new Date().getTime();
 
@@ -28,9 +32,42 @@ export default function Countdown() {
     return () => clearInterval(timer);
   }, []);
 
+  if (!mounted) return null;
+
   return (
-    <div className="text-3xl font-semibold text-center mt-6">
-      {timeLeft}
-    </div>
+    <motion.div 
+      className="flex justify-center items-center mb-24 px-4"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+    >
+      <div className="text-center">
+        <motion.div 
+          className="mb-6 text-5xl"
+          animate={{ scale: [1, 1.2, 1], rotate: [0, 5, -5, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          💕
+        </motion.div>
+        <motion.p 
+          className="text-2xl sm:text-3xl md:text-4xl font-semibold bg-gradient-to-r from-rose-500 via-pink-500 to-rose-500 bg-clip-text text-transparent"
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+        >
+          {timeLeft || "Cargando..."}
+        </motion.p>
+        <motion.div className="mt-6 flex justify-center gap-2 text-4xl">
+          {["💒", "💍", "🎉"].map((emoji, i) => (
+            <motion.span
+              key={i}
+              animate={{ y: [-10, 10, -10] }}
+              transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+            >
+              {emoji}
+            </motion.span>
+          ))}
+        </motion.div>
+      </div>
+    </motion.div>
   );
 }
