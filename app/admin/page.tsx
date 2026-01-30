@@ -117,7 +117,7 @@ export default function AdminPage() {
               <>
                 <p><strong>Menores a 5 años:</strong> {rsvp.menores_cinco}</p>
                 <p><strong>Entre 5 y 10 años:</strong> {rsvp.entre_cinco_diez}</p>
-                <p><strong>Menores a 10 años:</strong> {rsvp.mayores_diez}</p>
+                <p><strong>Mayores a 10 años:</strong> {rsvp.mayores_diez}</p>
                 <p>
                   <strong>Restricciones Alimentarias:</strong>{" "}
                   {rsvp.restricciones_alimentarias || "—"}
