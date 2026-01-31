@@ -34,20 +34,27 @@ export default function Gallery() {
           transition={{ staggerChildren: 0.1 }}
           viewport={{ once: true }}
         >
-          {photos.map((photo) => (
+            {photos.map((photo) => (
             <motion.div
-              key={photo.id}
-              layoutId={`photo-${photo.id}`}
-              onClick={() => setSelectedId(photo.id)}
-              className="cursor-pointer relative h-64 bg-gray-200 rounded-lg overflow-hidden group"
-              whileHover={{ scale: 1.05 }}
+                key={photo.id}
+                layoutId={`photo-${photo.id}`}
+                onClick={() => setSelectedId(photo.id)}
+                className="cursor-pointer relative h-64 rounded-lg overflow-hidden group"
+                whileHover={{ scale: 1.05 }}
             >
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all" />
-              <p className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                <img
+                src={photo.src}
+                alt={photo.alt}
+                className="absolute inset-0 w-full h-full object-cover"
+                />
+
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all" />
+                <p className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
                 Ver
-              </p>
+                </p>
             </motion.div>
-          ))}
+            ))}
+
         </motion.div>
 
         {selectedId && (
@@ -58,16 +65,22 @@ export default function Gallery() {
             animate={{ opacity: 1 }}
           >
             <motion.div
-              className="relative max-w-2xl w-full h-96 bg-white rounded-lg"
-              layoutId={`photo-${selectedId}`}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => setSelectedId(null)}
-                className="absolute top-4 right-4 text-2xl text-gray-600 z-10"
-              >
-                ✕
-              </button>
+                className="relative max-w-2xl w-full h-[70vh] rounded-lg overflow-hidden"
+                layoutId={`photo-${selectedId}`}
+                onClick={(e) => e.stopPropagation()}
+                >
+                <img
+                    src={photos.find(p => p.id === selectedId)?.src}
+                    alt=""
+                    className="w-full h-full object-contain bg-black"
+                />
+
+                <button
+                    onClick={() => setSelectedId(null)}
+                    className="absolute top-3 right-3 text-white text-2xl bg-black/60 rounded-full w-10 h-10 flex items-center justify-center"
+                >
+                    ✕
+                </button>
             </motion.div>
           </motion.div>
         )}

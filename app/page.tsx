@@ -8,12 +8,15 @@ import Gallery from "./components/Gallery";
 import Location from "./components/Location";
 import RsvpForm from "./components/RsvpForm";
 import Footer from "./components/Footer";
+import { section } from "framer-motion/m";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-neutral-100 text-neutral-800">
-      <Hero />
-
+      <section>
+        <Hero />
+      </section>
+      
       <section id="details" className="py-16 px-6">
         <Countdown />
       </section>
@@ -22,8 +25,13 @@ export default function Home() {
         <Ceremony />
       </section>
 
-      <Gallery />
-      <Location />
+      <section>
+        <Gallery /> 
+      </section>
+      
+      <section>
+        <Location />
+      </section>
 
       {/* RSVP */}
       <section id="rsvp" className="py-24 px-6 bg-white fade-up">
