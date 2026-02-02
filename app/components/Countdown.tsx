@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { theme } from "@/app/styles/theme";
 
 const EVENT_DATE = new Date("2026-11-22T12:30:00");
 
@@ -50,7 +51,7 @@ export default function Countdown() {
           💕
         </motion.div>
         <motion.p 
-          className="text-2xl sm:text-3xl md:text-4xl font-semibold bg-gradient-to-r from-rose-500 via-pink-500 to-rose-500 bg-clip-text text-transparent"
+          className={`text-2xl sm:text-3xl md:text-4xl font-semibold ${theme.gradients.countdown}`}
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         >

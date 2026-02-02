@@ -1,13 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { theme, tw } from "@/app/styles/theme";
 
 export default function Location() {
   return (
-    <section className="py-24 px-6 bg-gradient-to-b from-white to-rose-50">
+    <section className={`py-24 px-6 ${theme.gradients.backgroundReverse}`}>
       <div className="max-w-6xl mx-auto">
         <motion.h2
-          className="text-4xl font-serif font-bold text-center mb-4 text-rose-600"
+          className={`text-4xl font-serif font-bold text-center mb-4 ${theme.text.heading}`}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -48,8 +49,8 @@ export default function Location() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <div className="p-6 bg-white rounded-lg shadow-md border-l-4 border-rose-500">
-              <h3 className="text-xl font-semibold text-rose-600 mb-2">📍 Ubicación</h3>
+            <div className={`${tw.card} ${theme.borders.primary}`}>
+              <h3 className={`text-xl font-semibold ${theme.text.heading} mb-2`}>📍 Ubicación</h3>
               <p className="text-gray-700">
                 Complejo Oscar Chapino
               </p>
@@ -60,20 +61,20 @@ export default function Location() {
                 href="https://maps.google.com/?q=Complejo+Oscar+Chapino"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-rose-500 hover:text-rose-600 mt-2 inline-block font-semibold"
+                className={`${theme.text.body} ${theme.text.linkHover} mt-2 inline-block font-semibold`}
               >
                 Ver en Google Maps →
               </a>
             </div>
 
-            <div className="p-6 bg-white rounded-lg shadow-md border-l-4 border-pink-500">
-              <h3 className="text-xl font-semibold text-pink-600 mb-2">🕐 Horario Fiesta</h3>
+            <div className={`${tw.card} ${theme.borders.secondary}`}>
+              <h3 className={`text-xl font-semibold ${theme.text.body.replace('emerald', 'teal')} mb-2`}>🕐 Horario Fiesta</h3>
               <p className="text-gray-700">Recepción: 12:30 PM</p>
               <p className="text-gray-600">Finalización: 21:00 PM</p>
             </div>
 
-            <div className="p-6 bg-white rounded-lg shadow-md border-l-4 border-rose-400">
-              <h3 className="text-xl font-semibold text-rose-600 mb-2">🅿️ Estacionamiento</h3>
+            <div className={`${tw.card} ${theme.borders.light}`}>
+              <h3 className={`text-xl font-semibold ${theme.text.heading} mb-2`}>🅿️ Estacionamiento</h3>
               <p className="text-gray-700">
                 Estacionamiento disponible en el complejo
               </p>

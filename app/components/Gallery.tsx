@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { theme } from "@/app/styles/theme";
 
 export default function Gallery() {
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -19,7 +20,7 @@ export default function Gallery() {
     <section className="py-24 px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <motion.h2
-          className="text-4xl font-serif font-bold text-center mb-16 text-rose-600"
+          className={`text-4xl font-serif font-bold text-center mb-16 ${theme.text.heading}`}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

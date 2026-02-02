@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { theme, tw } from "@/app/styles/theme";
 
 export default function RsvpForm() {
   const [formData, setFormData] = useState({
@@ -83,7 +84,7 @@ export default function RsvpForm() {
     >
       {submitted ? (
         <motion.div
-          className="bg-green-50 border-2 border-green-500 text-green-700 p-6 rounded-lg text-center"
+          className={`${theme.backgrounds.success} border-2 p-6 rounded-lg text-center`}
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
         >
@@ -110,7 +111,7 @@ export default function RsvpForm() {
         <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-lg">
           {/* Datos Personales */}
           <div>
-            <h3 className="text-xl font-semibold text-rose-600 mb-4">Datos Personales</h3>
+            <h3 className={`text-xl font-semibold ${theme.text.heading} mb-4`}>Datos Personales</h3>
             <div className="grid md:grid-cols-2 gap-6">
               <motion.div whileHover={{ scale: 1.02 }}>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -122,7 +123,7 @@ export default function RsvpForm() {
                   value={formData.nombre}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition"
+                  className={tw.inputFocus}
                   placeholder="Tu nombre"
                 />
               </motion.div>
@@ -137,7 +138,7 @@ export default function RsvpForm() {
                   value={formData.apellido}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition"
+                  className={tw.inputFocus}
                   placeholder="Tu apellido"
                 />
               </motion.div>
@@ -146,7 +147,7 @@ export default function RsvpForm() {
 
           {/* Asistencia */}
           <div>
-            <h3 className="text-xl font-semibold text-rose-600 mb-4">Confirmación de Asistencia</h3>
+            <h3 className={`text-xl font-semibold ${theme.text.heading} mb-4`}>Confirmación de Asistencia</h3>
             <motion.div whileHover={{ scale: 1.02 }}>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 ¿Podrás asistir? *
@@ -155,7 +156,7 @@ export default function RsvpForm() {
                 name="asistencia"
                 value={formData.asistencia}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition bg-white"
+                className={`${tw.inputFocus} bg-white`}
               >
                 <option value="si">Sí, confirmo mi asistencia 🎉</option>
                 <option value="no">No puedo asistir 😞</option>
@@ -167,7 +168,7 @@ export default function RsvpForm() {
           {/* Acompañantes - Solo si confirma asistencia */}
           {formData.asistencia === "si" && (
             <div>
-              <h3 className="text-xl font-semibold text-rose-600 mb-4">Acompañantes</h3>
+              <h3 className={`text-xl font-semibold ${theme.text.heading} mb-4`}>Acompañantes</h3>
               <p className="text-sm text-gray-600 mb-4">Especifica la cantidad de personas que te acompañarán</p>
               <div className="grid md:grid-cols-3 gap-6">
                 <motion.div whileHover={{ scale: 1.02 }}>
@@ -178,7 +179,7 @@ export default function RsvpForm() {
                     name="menoresCinco"
                     value={formData.menoresCinco}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition bg-white"
+                    className={`${tw.inputFocus} bg-white`}
                   >
                     <option value="0">0</option>
                     <option value="1">1</option>
@@ -196,7 +197,7 @@ export default function RsvpForm() {
                     name="entrecincodiez"
                     value={formData.entrecincodiez}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition bg-white"
+                    className={`${tw.inputFocus} bg-white`}
                   >
                     <option value="0">0</option>
                     <option value="1">1</option>
@@ -214,7 +215,7 @@ export default function RsvpForm() {
                     name="mayoresdiez"
                     value={formData.mayoresdiez}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition bg-white"
+                    className={`${tw.inputFocus} bg-white`}
                   >
                     <option value="0">0</option>
                     <option value="1">1</option>
@@ -233,7 +234,7 @@ export default function RsvpForm() {
           {/* Restricciones Alimentarias - Solo si confirma asistencia */}
           {formData.asistencia === "si" && (
             <div>
-              <h3 className="text-xl font-semibold text-rose-600 mb-4">Restricciones Alimentarias</h3>
+              <h3 className={`text-xl font-semibold ${theme.text.heading} mb-4`}>Restricciones Alimentarias</h3>
               <motion.div whileHover={{ scale: 1.02 }}>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   ¿Tienes alguna restricción dietética o alergia? (ej: celíaco, hipertenso, alérgico a frutos secos, etc.)
@@ -243,7 +244,7 @@ export default function RsvpForm() {
                   value={formData.restricciones}
                   onChange={handleChange}
                   rows={3}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition"
+                  className={tw.inputFocus}
                   placeholder="Cuéntanos sobre tus restricciones alimentarias o alergias..."
                 />
               </motion.div>
@@ -253,7 +254,7 @@ export default function RsvpForm() {
           {/* Comentario - Solo si no puede asistir */}
           {formData.asistencia === "no" && (
             <div>
-              <h3 className="text-xl font-semibold text-rose-600 mb-4">Mensaje (Opcional)</h3>
+              <h3 className={`text-xl font-semibold ${theme.text.heading} mb-4`}>Mensaje (Opcional)</h3>
               <motion.div whileHover={{ scale: 1.02 }}>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Si deseas, déjanos un comentario
@@ -263,7 +264,7 @@ export default function RsvpForm() {
                   value={formData.mensaje}
                   onChange={handleChange}
                   rows={3}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-rose-500 focus:outline-none transition"
+                  className={tw.inputFocus}
                   placeholder="Déjanos un mensaje..."
                 />
               </motion.div>
@@ -273,7 +274,7 @@ export default function RsvpForm() {
           <motion.button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-lg font-semibold hover:shadow-lg transition-shadow disabled:opacity-50"
+            className={`${tw.button} w-full`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
