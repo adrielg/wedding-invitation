@@ -68,9 +68,12 @@ export default function Location() {
             </div>
 
             <div className={`${tw.card} ${theme.borders.secondary}`}>
-              <h3 className={`text-xl font-semibold ${theme.text.body.replace('emerald', 'teal')} mb-2`}>🕐 Horario Fiesta</h3>
-              <p className="text-gray-700">Recepción: 12:30 PM</p>
-              <p className="text-gray-600">Finalización: 21:00 PM</p>
+              <h3 className={`text-xl font-semibold ${theme.text.body.replace('emerald', 'teal')} mb-2`}>🕐 Día y Hora de la fiesta</h3>
+              <p className="text-gray-700 mb-2">Domingo 22 de Noviembre 2026</p>
+              <ul className="list-disc list-inside space-y-1">
+                <li className="text-gray-700">Recepción: 12:30 PM</li>
+                <li className="text-gray-600">Finalización: 21:00 PM</li>
+              </ul>
             </div>
 
             <div className={`${tw.card} ${theme.borders.light}`}>

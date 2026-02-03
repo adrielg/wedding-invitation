@@ -44,9 +44,12 @@ export default function Ceremony() {
             </div>
 
             <div className={`${tw.card} ${theme.borders.secondary}`}>
-              <h3 className={`text-xl font-semibold ${theme.text.body.replace('emerald', 'teal')} mb-2`}>🕐 Horario Ceremonia</h3>
-              <p className="text-gray-700">Inicio: 10:00 PM</p>
-              <p className="text-gray-600">Duración aproximada: 2 horas</p>
+              <h3 className={`text-xl font-semibold ${theme.text.body.replace('emerald', 'teal')} mb-2`}>🕐 Día y Horario de la ceremonia</h3>
+              <p className="text-gray-700 mb-2">Jueves 19 de Noviembre 2026</p>
+              <ul className="list-disc list-inside space-y-1">
+                <li className="text-gray-700">Inicio: 10:00 PM</li>
+                <li className="text-gray-600">Duración aproximada: 2 horas</li>
+              </ul>
             </div>
 
             <div className={`${tw.card} ${theme.borders.light}`}>
