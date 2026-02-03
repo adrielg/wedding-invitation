@@ -19,7 +19,7 @@ export const metadata = {
   viewport: "width=device-width, initial-scale=1, maximum-scale=5",
   themeColor: "#1a1a1a",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/wedding-icon.png", // Cambia a PNG y coloca la imagen en public/
   },
   openGraph: {
     title: "Nuestra Boda 💍",
