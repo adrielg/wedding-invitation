@@ -17,7 +17,7 @@ export default function Home() {
         <Hero />
       </section>
       
-      <section id="details" className="py-16 px-6">
+      <section id="details">
         <Countdown />
       </section>
 

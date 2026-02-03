@@ -55,21 +55,21 @@ export default function Hero() {
       
       <div className="text-center z-10 px-6">
         <motion.h1
-          className={`text-5xl sm:text-6xl md:text-7xl font-serif font-bold ${theme.gradients.text} mb-4 drop-shadow-sm`}
+          className={`text-5xl sm:text-6xl md:text-7xl font-serif font-bold mb-4 drop-shadow-sm`}
           variants={itemVariants}
         >
           Adriel & Ana
         </motion.h1>
 
         <motion.p
-          className={`text-xl sm:text-2xl ${theme.text.subheading} mb-6 font-light drop-shadow-sm`}
+          className={`text-xl sm:text-2xl mb-6 font-light drop-shadow-sm`}
           variants={itemVariants}
         >
           Nos alegra invitarte a celebrar nuestro matrimonio
         </motion.p>
 
         <motion.p
-          className={`text-lg sm:text-xl ${theme.text.body} mb-8 drop-shadow-sm`}
+          className={`text-lg sm:text-xl mb-8 drop-shadow-sm`}
           variants={itemVariants}
         >
           22 de Noviembre de 2026
