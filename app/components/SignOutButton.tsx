@@ -17,7 +17,7 @@ export default function SignOutButton() {
   return (
     <button
       onClick={handleLogout}
-      className="text-sm text-neutral-500 hover:text-black"
+      className="fixed top-4 right-4 px-4 py-2 text-sm text-white bg-black hover:bg-neutral-700 rounded-full transition-colors"
     >
       {loading ? "Cerrando..." : "Cerrar sesión"}
     </button>
