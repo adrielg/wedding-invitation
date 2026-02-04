@@ -18,9 +18,6 @@ export const metadata = {
   description: "Te invitamos a celebrar nuestro matrimonio",
   viewport: "width=device-width, initial-scale=1, maximum-scale=5",
   themeColor: "#1a1a1a",
-  icons: {
-    icon: "/wedding-icon.png", // Cambia a PNG y coloca la imagen en public/
-  },
   openGraph: {
     title: "Nuestra Boda 💍",
     description: "Te invitamos a celebrar nuestro matrimonio",
