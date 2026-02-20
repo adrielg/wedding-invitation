@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EventType {
+  wedding       // Boda
+  quince        // 15 años
+  infantil      // Cumpleaños infantil
+  babyshower    // Baby shower
+  corporativo   // Evento corporativo
+  otro          // Personalizado
+}
+
+model Event {
+  id          String      @id @default(uuid())
+  slug        String      @unique // URL amigable: "boda-juan-maria"
+  name        String      // "Boda de Juan y María"
+  type        EventType
+  date        DateTime
+  location    String?
+  description String?
+  owner_id    String?     // Para multi-tenancy futuro
+  password    String?     // Contraseña para que el cliente acceda a sus RSVPs
+  is_active   Boolean     @default(true)
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  
+  config      EventConfig?
+  rsvps       Rsvp[]
+  
+  @@map("events")
+}
+
+model EventConfig {
+  id                String   @id @default(uuid())
+  event_id          String   @unique
+  event             Event    @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  
+  // Configuración del formulario
+  requires_menu     Boolean  @default(true)
+  requires_dietary  Boolean  @default(true)
+  requires_allergies Boolean @default(true)
+  max_adults        Int      @default(10)
+  max_children      Int      @default(10)
+  
+  // Configuración de tema/diseño
+  theme_primary_color    String  @default("#f43f5e") // rose-600
+  theme_secondary_color  String  @default("#fda4af") // rose-300
+  theme_background       String  @default("gradient") // gradient | solid | image
+  theme_font_family      String  @default("Playfair Display")
+  hero_image_url         String?
+  gallery_images         Json?   // Array de URLs de imágenes
+  
+  // Contenido del evento
+  venue_name             String? // Nombre del lugar
+  venue_address          String? // Dirección
+  venue_map_url          String? // URL del iframe de Google Maps
+  ceremony_time          String? // Hora de ceremonia
+  reception_time         String? // Hora de recepción
+  parking_info           String? // Info de estacionamiento
+  dress_code             String? // Código de vestimenta
+  timeline_events        Json?   // Array de {time, title, icon}
+  
+  // Campos personalizados (JSON)
+  custom_fields     Json?
+  
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+  
+  @@map("event_configs")
+}
+
+model Rsvp {
+  id                        String   @id @default(uuid())
+  event_id                  String   // ← NUEVO: Relacionado al evento
+  event                     Event    @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  
+  nombre                    String
+  apellido                  String
+  asistencia                String
+  menores_cinco             Int      @default(0)
+  entre_cinco_diez          Int      @default(0)
+  mayores_diez              Int      @default(0)
+  restricciones_alimentarias String?
+  mensaje                   String?
+  created_at                DateTime @default(now())
+
+  @@map("rsvps")
+  @@index([event_id])
+}
+

@@ -42,8 +42,9 @@ body {
 
 :root {
   --color-bg: #faf7f3;
-  --color-primary: #8c6a4f;
-  --color-secondary: #d6c1a3;
+  --color-primary: #f43f5e;
+  --color-secondary: #fda4af;
+  --font-heading: 'Playfair Display', serif;
 }
 
 body {
@@ -52,6 +53,28 @@ body {
   color: #3a3a3a;
 }
 
+/* Backgrounds personalizables */
+body.theme-gradient {
+  background: linear-gradient(135deg, 
+    color-mix(in srgb, var(--color-primary) 15%, white), 
+    white,
+    color-mix(in srgb, var(--color-secondary) 15%, white)
+  );
+  min-height: 100vh;
+}
+
+body.theme-solid {
+  background-color: color-mix(in srgb, var(--color-primary) 10%, white);
+  min-height: 100vh;
+}
+
+body.theme-pattern {
+  background-color: color-mix(in srgb, var(--color-primary) 8%, white);
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--color-primary) 20%, transparent) 1px, transparent 1px);
+  background-size: 20px 20px;
+  min-height: 100vh;
+}
+
 h1, h2, h3 {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
 }

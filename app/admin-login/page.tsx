@@ -10,19 +10,29 @@ export default function AdminLogin() {
 
   const login = async () => {
     setError("");
+    
+    try {
+      console.log("Intentando login...");
+      
+      const res = await fetch("/api/admin-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
 
-    const res = await fetch("/api/admin-login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
-    });
+      console.log("Response status:", res.status);
 
-    if (!res.ok) {
-      setError("Contraseña incorrecta");
-      return;
+      if (!res.ok) {
+        setError("Contraseña incorrecta");
+        return;
+      }
+
+      console.log("Login exitoso, redirigiendo...");
+      router.push("/admin/dashboard");
+    } catch (err) {
+      console.error("Error en login:", err);
+      setError("Error de conexión");
     }
-
-    router.push("/admin");
   };
 
   return (
@@ -36,7 +46,13 @@ export default function AdminLogin() {
           type="password"
           placeholder="Contraseña"
           className="border p-2 w-full mb-3"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              login();
+            }
+          }}
         />
 
         {error && (

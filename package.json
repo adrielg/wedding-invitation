@@ -6,13 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:studio": "prisma studio",
+    "prisma:migrate": "prisma migrate dev"
   },
   "dependencies": {
+    "@prisma/client": "^5.20.0",
     "@supabase/supabase-js": "^2.93.3",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "bcryptjs": "^3.0.3",
     "framer-motion": "^12.29.2",
+    "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
+    "prisma": "^5.20.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "xlsx": "^0.18.5"
@@ -24,6 +34,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "supabase": "^2.76.7",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
