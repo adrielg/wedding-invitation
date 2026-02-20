@@ -69,7 +69,7 @@ export async function PUT(
   }
 }
 
-// PATCH - Actualizar estado activo/inactivo
+// PATCH - Actualizar evento completo (usado por el editor del cliente)
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -77,25 +77,34 @@ export async function PATCH(
   try {
     const { id } = await params
     const body = await request.json()
-    const { is_active } = body
+    const { config, password, ...eventData } = body
     
-    if (typeof is_active !== 'boolean') {
-      return NextResponse.json(
-        { error: 'is_active debe ser un booleano' },
-        { status: 400 }
-      )
+    // Hash password if provided
+    const updateData: any = { ...eventData }
+    if (password) {
+      updateData.password = await hashPassword(password)
     }
     
+    // Actualizar evento con config
     const updatedEvent = await prisma.event.update({
       where: { id },
-      data: { is_active }
+      data: {
+        ...updateData,
+        config: config ? {
+          upsert: {
+            create: config,
+            update: config
+          }
+        } : undefined
+      },
+      include: { config: true }
     })
     
     return NextResponse.json(updatedEvent)
   } catch (error) {
-    console.error('Error updating event status:', error)
+    console.error('Error updating event:', error)
     return NextResponse.json(
-      { error: 'Error al actualizar estado del evento' },
+      { error: 'Error al actualizar evento' },
       { status: 500 }
     )
   }
