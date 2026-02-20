@@ -1,9 +1,24 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { theme } from "@/app/styles/theme";
 
-export default function Details() {
+interface DetailsProps {
+  eventType?: string | null;
+  venueName?: string | null;
+  venueAddress?: string | null;
+  dressCode?: string | null;
+  ceremonyTime?: string | null;
+  receptionTime?: string | null;
+}
+
+export default function Details({
+  eventType,
+  venueName,
+  venueAddress,
+  dressCode,
+  ceremonyTime,
+  receptionTime
+}: DetailsProps) {
   return (
     <motion.section
       id="details"
@@ -15,35 +30,78 @@ export default function Details() {
     >
       <div className="max-w-4xl mx-auto">
         <motion.h2
-          className={`text-4xl md:text-5xl font-serif font-bold text-center mb-16 ${theme.text.heading}`}
+          className="text-4xl md:text-5xl font-bold text-center mb-16"
+          style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-primary)' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          Detalles de la Ceremonia
+          Detalles del Evento
         </motion.h2>
 
         <div className="grid md:grid-cols-2 gap-8">
-          <motion.div
-            className={`p-6 bg-gradient-to-br ${theme.backgrounds.card} rounded-lg`}
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.3 }}
-          >
-            <h3 className={`text-2xl font-semibold ${theme.text.heading} mb-4`}>📍 Ubicación</h3>
-            <p className="text-gray-700 mb-2">Iglesia Santiago Apóstol</p>
-            <p className="text-gray-600">Calle Principal 123, Ciudad</p>
-          </motion.div>
+          {(venueName || venueAddress) && (
+            <motion.div
+              className="p-6 rounded-lg"
+              style={{ 
+                backgroundColor: 'color-mix(in srgb, var(--color-primary) 10%, white)',
+                borderLeft: '4px solid var(--color-primary)'
+              }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h3 
+                className="text-2xl font-semibold mb-4"
+                style={{ color: 'var(--color-primary)' }}
+              >
+                📍 Lugar
+              </h3>
+              {venueName && <p className="text-gray-700 font-medium mb-1">{venueName}</p>}
+              {venueAddress && <p className="text-gray-600">{venueAddress}</p>}
+            </motion.div>
+          )}
 
-          <motion.div
-            className={`p-6 bg-gradient-to-br ${theme.backgrounds.cardReverse} rounded-lg`}
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.3 }}
-          >
-            <h3 className={`text-2xl font-semibold ${theme.text.body.replace('emerald', 'teal')} mb-4`}>🕐 Horario</h3>
-            <p className="text-gray-700 mb-2">Ceremonia: 12:30 PM</p>
-            <p className="text-gray-600">Recepción: 13:30 PM</p>
-          </motion.div>
+          {eventType === "wedding" && (ceremonyTime || receptionTime) && (
+            <motion.div
+              className="p-6 rounded-lg"
+              style={{ 
+                backgroundColor: 'color-mix(in srgb, var(--color-secondary) 10%, white)',
+                borderLeft: '4px solid var(--color-secondary)'
+              }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h3 
+                className="text-2xl font-semibold mb-4"
+                style={{ color: 'var(--color-primary)' }}
+              >
+                🕐 Horarios
+              </h3>
+              {ceremonyTime && <p className="text-gray-700 mb-2">Ceremonia: {ceremonyTime}</p>}
+              {receptionTime && <p className="text-gray-600">Recepción: {receptionTime}</p>}
+            </motion.div>
+          )}
+
+          {dressCode && (
+            <motion.div
+              className="p-6 rounded-lg"
+              style={{ 
+                backgroundColor: 'color-mix(in srgb, var(--color-secondary) 10%, white)',
+                borderLeft: '4px solid var(--color-secondary)'
+              }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h3 
+                className="text-2xl font-semibold mb-4"
+                style={{ color: 'var(--color-primary)' }}
+              >
+                👔 Código de Vestimenta
+              </h3>
+              <p className="text-gray-700">{dressCode}</p>
+            </motion.div>
+          )}
         </div>
       </div>
     </motion.section>

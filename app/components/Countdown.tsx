@@ -4,17 +4,25 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { theme } from "@/app/styles/theme";
 
-const EVENT_DATE = new Date("2026-11-22T12:30:00");
+interface CountdownProps {
+  targetDate: Date;
+}
 
-export default function Countdown() {
+export default function Countdown({ targetDate }: CountdownProps) {
   const [timeLeft, setTimeLeft] = useState("");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
 
+    // Validar que targetDate sea una fecha válida
+    if (!targetDate || !(targetDate instanceof Date) || isNaN(targetDate.getTime())) {
+      setTimeLeft("Fecha inválida");
+      return;
+    }
+
     const timer = setInterval(() => {
-      const diff = EVENT_DATE.getTime() - new Date().getTime();
+      const diff = targetDate.getTime() - new Date().getTime();
 
       if (diff <= 0) {
         setTimeLeft("¡Hoy es el gran día! 🎉");
@@ -31,13 +39,13 @@ export default function Countdown() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [targetDate]);
 
   if (!mounted) return null;
 
   return (
       <motion.div 
-        className={`flex justify-center items-center py-24 px-6${theme.gradients.backgroundReverse}`} 
+        className="flex justify-center items-center py-24 px-6" 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -51,7 +59,13 @@ export default function Countdown() {
             💕
           </motion.div>
           <motion.p 
-            className={`text-2xl sm:text-3xl md:text-4xl font-semibold ${theme.gradients.countdown}`}
+            className="text-2xl sm:text-3xl md:text-4xl font-semibold"
+            style={{ 
+              background: `linear-gradient(135deg, var(--color-primary), var(--color-secondary))`,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 1.5, repeat: Infinity }}
           >
