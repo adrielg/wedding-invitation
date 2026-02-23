@@ -37,18 +37,17 @@ export class PrismaEventRepository implements IEventRepository {
   }
 
   async update(id: string, eventDto: UpdateEventDto): Promise<Event> {
-    const { config, ...eventData } = eventDto
+    const { config, ...restData } = eventDto;
     
     return await prisma.event.update({
       where: { id },
       data: {
-        ...eventData,
-        config: config ? {
-          upsert: {
-            create: config,
+        ...restData,
+        ...(config && {
+          config: {
             update: config
           }
-        } : undefined
+        })
       }
     }) as Event
   }
