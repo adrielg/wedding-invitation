@@ -7,7 +7,7 @@ import {
   Roboto,
   Great_Vibes 
 } from "next/font/google";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
