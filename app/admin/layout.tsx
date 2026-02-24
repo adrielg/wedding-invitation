@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -11,18 +13,18 @@ export const viewport: Viewport = {
   themeColor: "#000000",
 };
 
-# Password de admin
-ADMIN_PASSWORD=casamiento2026
 
-# Desarrollo local (Docker)
-DATABASE_URL="postgresql://postgres:password@localhost:54322/postgres?schema=public"
-DIRECT_URL="postgresql://postgres:password@localhost:54322/postgres?schema=public"
+export default async function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("admin-token");
 
-# Para probar con Supabase en lugar de Docker (opcional)
-# Descomenta y reemplaza con tus valores reales:
-# DATABASE_URL="postgresql://postgres.TU_PROJECT_ID:[TU_PASSWORD]@aws-0-us-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
-# DIRECT_URL="postgresql://postgres.TU_PROJECT_ID:[TU_PASSWORD]@aws-0-us-east-1.pooler.supabase.com:5432/postgres"
-# NEXT_PUBLIC_USE_SUPABASE=true
+  if (!token) {
+    redirect("/admin-login");
+  }
 
-# NO uses Supabase en local
-NEXT_PUBLIC_USE_SUPABASE=false
+  return <>{children}</>;
+}

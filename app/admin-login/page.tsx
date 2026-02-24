@@ -1,16 +1,3 @@
-import type { Metadata, Viewport } from "next";
-
-export const metadata: Metadata = {
-  title: "Admin Login",
-  description: "Acceso administrativo",
-};
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#000000",
-};
-
 "use client";
 
 import { useState } from "react";
