@@ -46,24 +46,15 @@ const greatVibes = Great_Vibes({
   display: "swap",
 });
 
-export const metadata = {
-  title: "Eventos Especiales 🎊",
-  description: "Plataforma para gestionar y confirmar asistencia a tus eventos más importantes",
-  icons: {
-    icon: `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎊</text></svg>`,
-  },
-  openGraph: {
-    title: "Eventos Especiales 🎊",
-    description: "Plataforma para gestionar y confirmar asistencia a tus eventos más importantes",
-    type: "website",
-  },
+export const metadata: Metadata = {
+  title: "Invitación de Boda",
+  description: "Celebra con nosotros nuestro día especial",
 };
 
-export const viewport = {
-  width: "device-width",
+export const viewport: Viewport = {
+  width: 'device-width',
   initialScale: 1,
-  maximumScale: 5,
-  themeColor: "#1a1a1a",
+  themeColor: '#000000',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
