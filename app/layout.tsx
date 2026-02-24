@@ -48,8 +48,8 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  title: "Invitación de Boda",
-  description: "Celebra con nosotros nuestro día especial",
+  title: "Eventos Especiales",
+  description: "Gestión de eventos especiales e invitaciones",
 };
 
 export const viewport: Viewport = {
