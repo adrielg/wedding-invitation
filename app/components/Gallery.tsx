@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { theme } from "@/app/styles/theme";
 
 export default function Gallery() {
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -20,7 +19,8 @@ export default function Gallery() {
     <section className="py-24 px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <motion.h2
-          className={`text-4xl font-serif font-bold text-center mb-16 ${theme.text.heading}`}
+          className="text-4xl font-bold text-center mb-16"
+          style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-primary)' }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -42,6 +42,9 @@ export default function Gallery() {
                 onClick={() => setSelectedId(photo.id)}
                 className="cursor-pointer relative h-64 rounded-lg overflow-hidden group"
                 whileHover={{ scale: 1.05 }}
+                style={{
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                }}
             >
                 <img
                 src={photo.src}
@@ -49,8 +52,19 @@ export default function Gallery() {
                 className="absolute inset-0 w-full h-full object-cover"
                 />
 
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all" />
-                <p className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                <div 
+                  className="absolute inset-0 transition-all"
+                  style={{ 
+                    backgroundColor: 'rgba(0, 0, 0, 0)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'color-mix(in srgb, var(--color-primary) 60%, black)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+                  }}
+                />
+                <p className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity font-semibold">
                 Ver
                 </p>
             </motion.div>

@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { theme } from "@/app/styles/theme";
 
 export default function Timeline() {
   const events = [
@@ -13,10 +12,11 @@ export default function Timeline() {
   ];
 
   return (
-    <section className={`py-24 px-6 ${theme.gradients.background}`}>
+    <section className="py-24 px-6">
       <div className="max-w-4xl mx-auto">
         <motion.h2
-          className={`text-4xl font-serif font-bold text-center mb-16 ${theme.text.heading}`}
+          className="text-4xl font-bold text-center mb-16"
+          style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-primary)' }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -36,10 +36,20 @@ export default function Timeline() {
             >
               <div className="flex flex-col items-center">
                 <div className="text-3xl mb-2">{event.icon}</div>
-                <div className={`w-1 h-16 ${theme.gradients.timeline}`} />
+                <div 
+                  className="w-1 h-16"
+                  style={{ 
+                    background: `linear-gradient(to bottom, var(--color-primary), var(--color-secondary))` 
+                  }}
+                />
               </div>
               <div className="pt-1">
-                <p className={`text-sm font-semibold ${theme.text.body}`}>{event.time}</p>
+                <p 
+                  className="text-sm font-semibold"
+                  style={{ color: 'var(--color-primary)' }}
+                >
+                  {event.time}
+                </p>
                 <p className="text-lg font-medium text-gray-800">{event.title}</p>
               </div>
             </motion.div>

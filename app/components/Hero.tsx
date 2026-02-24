@@ -3,7 +3,18 @@
 import { motion } from "framer-motion";
 import { theme, tw } from "@/app/styles/theme";
 
-export default function Hero() {
+interface HeroProps {
+  eventName: string;
+  eventDate: Date;
+  heroImageUrl?: string | null;
+}
+
+export default function Hero({ eventName, eventDate, heroImageUrl }: HeroProps) {
+  const formattedDate = new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(eventDate);
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -38,45 +49,61 @@ export default function Hero() {
     >
       {/* Background image */}
       <div className="absolute inset-0 z-0">
-        <picture>
-          <source media="(max-width: 768px)" srcSet="/photos/wedding-frame-mobile.png" />
-          <source media="(min-width: 769px)" srcSet="/photos/wedding-frame-desktop.png" />
-          <img
-            src="/photos/wedding-frame-desktop.png"
-            alt="Wedding frame"
-            className="w-full h-full object-fill"
-          />
-        </picture>
-        {/* Semi-transparent overlay para mejorar legibilidad */}
-        <div className="absolute inset-0 bg-white/30" />
+        {heroImageUrl ? (
+          <>
+            <img
+              src={heroImageUrl}
+              alt="Hero background"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/30" />
+          </>
+        ) : (
+          <>
+            <picture>
+              <source media="(max-width: 768px)" srcSet="/photos/wedding-frame-mobile.png" />
+              <source media="(min-width: 769px)" srcSet="/photos/wedding-frame-desktop.png" />
+              <img
+                src="/photos/wedding-frame-desktop.png"
+                alt="Wedding frame"
+                className="w-full h-full object-fill"
+              />
+            </picture>
+            <div className="absolute inset-0 bg-white/30" />
+          </>
+        )}
       </div>
 
       {/* Decorative elements */}
       
       <div className="text-center z-10 px-6">
         <motion.h1
-          className={`text-5xl sm:text-6xl md:text-7xl font-serif font-bold mb-4 drop-shadow-sm`}
+          className="text-5xl sm:text-6xl md:text-7xl font-bold mb-4 drop-shadow-sm"
+          style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-primary)' }}
           variants={itemVariants}
         >
-          Adriel & Ana
+          {eventName}
         </motion.h1>
 
         <motion.p
-          className={`text-xl sm:text-2xl mb-6 font-light drop-shadow-sm`}
+          className="text-xl sm:text-2xl mb-6 font-light drop-shadow-sm"
+          style={{ color: 'var(--color-primary)' }}
           variants={itemVariants}
         >
-          Nos alegra invitarte a celebrar nuestro matrimonio
+          Nos alegra invitarte a celebrar este momento especial
         </motion.p>
 
         <motion.p
-          className={`text-lg sm:text-xl mb-8 drop-shadow-sm`}
+          className="text-lg sm:text-xl mb-8 drop-shadow-sm"
+          style={{ color: 'var(--color-primary)' }}
           variants={itemVariants}
         >
-          22 de Noviembre de 2026
+          {formattedDate}
         </motion.p>
 
         <motion.button
-          className={tw.button}
+          className="px-8 py-3 rounded-full text-white font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg"
+          style={{ backgroundColor: 'var(--color-primary)' }}
           variants={itemVariants}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

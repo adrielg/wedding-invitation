@@ -1,19 +1,52 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { theme, tw } from "@/app/styles/theme";
 
-export default function Location() {
+interface LocationProps {
+  venueName?: string | null;
+  venueAddress?: string | null;
+  mapUrl?: string | null;
+  ceremonyTime?: string | null;
+  receptionTime?: string | null;
+  parkingInfo?: string | null;
+  eventDate?: Date;
+}
+
+export default function Location({
+  venueName,
+  venueAddress,
+  mapUrl,
+  ceremonyTime,
+  receptionTime,
+  parkingInfo,
+  eventDate
+}: LocationProps) {
+  const defaultMapUrl = "https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d2417.384625132936!2d-60.45334602121145!3d-31.78135841730976!3m2!1i1024!2i768!4f13.1!5e1!3m2!1ses!2sar!4v1769713471570!5m2!1ses!2sar";
+  const displayVenueName = venueName || "Complejo Oscar Chapino";
+  const displayVenueAddress = venueAddress || "Av. Jorge Newbery 5000, Paraná, ER";
+  const displayMapUrl = mapUrl || defaultMapUrl;
+  const displayCeremonyTime = ceremonyTime || "12:30 PM";
+  const displayReceptionTime = receptionTime || "13:30 PM";
+  const displayParkingInfo = parkingInfo || "Estacionamiento gratuito disponible";
+  
+  const formattedDate = eventDate ? new Intl.DateTimeFormat('es-ES', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(eventDate) : "Domingo 22 de Noviembre 2026";
+
   return (
-    <section className={`py-24 px-6 ${theme.gradients.backgroundReverse}`}>
+    <section className="py-24 px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <motion.h2
-          className={`text-4xl font-serif font-bold text-center mb-4 ${theme.text.heading}`}
+          className="text-4xl font-bold text-center mb-4"
+          style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-primary)' }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          ¿Dónde nos encontramos?
+          ¿Dónde festejamos?
         </motion.h2>
 
         <motion.p
@@ -22,7 +55,7 @@ export default function Location() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          Complejo Oscar Chapino – Av. Jorge Newbery 5000, 3100 Paraná, Entre Ríos
+          {displayVenueName} – {displayVenueAddress}
         </motion.p>
 
         <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
@@ -34,11 +67,12 @@ export default function Location() {
             viewport={{ once: true }}
           >
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d2417.384625132936!2d-60.45334602121145!3d-31.78135841730976!3m2!1i1024!2i768!4f13.1!5e1!3m2!1ses!2sar!4v1769713471570!5m2!1ses!2sar"
+              src={displayMapUrl}
               className="w-full h-[400px]"
               loading="lazy"
-              
+              allowFullScreen
               referrerPolicy="no-referrer-when-downgrade"
+              title="Ubicación del evento"
             ></iframe>
           </motion.div>
 
@@ -49,38 +83,70 @@ export default function Location() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <div className={`${tw.card} ${theme.borders.primary}`}>
-              <h3 className={`text-xl font-semibold ${theme.text.heading} mb-2`}>📍 Ubicación</h3>
+            <div 
+              className="p-6 rounded-lg shadow-md"
+              style={{ 
+                backgroundColor: 'color-mix(in srgb, var(--color-primary) 8%, white)',
+                borderLeft: '4px solid var(--color-primary)'
+              }}
+            >
+              <h3 
+                className="text-xl font-semibold mb-2"
+                style={{ color: 'var(--color-primary)' }}
+              >
+                📍 Ubicación
+              </h3>
               <p className="text-gray-700">
-                Complejo Oscar Chapino
+                {displayVenueName}
               </p>
               <p className="text-gray-600">
-                Av. Jorge Newbery 5000, Paraná, ER
+                {displayVenueAddress}
               </p>
               <a
-                href="https://maps.google.com/?q=Complejo+Oscar+Chapino"
+                href={`https://maps.google.com/?q=${encodeURIComponent(displayVenueName)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${theme.text.body} ${theme.text.linkHover} mt-2 inline-block font-semibold`}
+                className="mt-2 inline-block font-semibold hover:underline"
+                style={{ color: 'var(--color-primary)' }}
               >
                 Ver en Google Maps →
               </a>
             </div>
 
-            <div className={`${tw.card} ${theme.borders.secondary}`}>
-              <h3 className={`text-xl font-semibold ${theme.text.body.replace('emerald', 'teal')} mb-2`}>🕐 Día y Hora de la fiesta</h3>
-              <p className="text-gray-700 mb-2">Domingo 22 de Noviembre 2026</p>
+            <div 
+              className="p-6 rounded-lg shadow-md"
+              style={{ 
+                backgroundColor: 'color-mix(in srgb, var(--color-secondary) 8%, white)',
+                borderLeft: '4px solid var(--color-secondary)'
+              }}
+            >
+              <h3 
+                className="text-xl font-semibold mb-2"
+                style={{ color: 'var(--color-primary)' }}
+              >
+                🕐 Día y Hora de la fiesta
+              </h3>
+              <p className="text-gray-700 mb-2 capitalize">{formattedDate}</p>
               <ul className="list-disc list-inside space-y-1">
-                <li className="text-gray-700">Recepción: 12:30 PM</li>
-                <li className="text-gray-600">Finalización: 21:00 PM</li>
+                <li className="text-gray-700">Recepción: {displayCeremonyTime}</li>
+                <li className="text-gray-600">Finalización: {displayReceptionTime}</li>
               </ul>
             </div>
 
-            <div className={`${tw.card} ${theme.borders.light}`}>
-              <h3 className={`text-xl font-semibold ${theme.text.heading} mb-2`}>🅿️ Estacionamiento</h3>
-              <p className="text-gray-700">
-                Estacionamiento disponible en el complejo
-              </p>
+            <div 
+              className="p-6 rounded-lg shadow-md"
+              style={{ 
+                backgroundColor: 'color-mix(in srgb, var(--color-primary) 5%, white)',
+                borderLeft: '4px solid var(--color-primary)'
+              }}
+            >
+              <h3 
+                className="text-xl font-semibold mb-2"
+                style={{ color: 'var(--color-primary)' }}
+              >
+                🅿️ Estacionamiento
+              </h3>
+              <p className="text-gray-700">{displayParkingInfo}</p>
             </div>
           </motion.div>
         </div>

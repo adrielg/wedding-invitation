@@ -2,10 +2,19 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { supabase } from "@/lib/supabase";
 import { theme, tw } from "@/app/styles/theme";
 
-export default function RsvpForm() {
+interface RsvpFormProps {
+  eventId: string;
+  eventType?: string;
+  eventConfig?: {
+    requires_menu?: boolean;
+    requires_dietary?: boolean;
+    requires_allergies?: boolean;
+  } | null;
+}
+
+export default function RsvpForm({ eventId, eventType, eventConfig }: RsvpFormProps) {
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
@@ -33,8 +42,13 @@ export default function RsvpForm() {
     setLoading(true);
 
     try {
-      const { error } = await supabase.from("rsvps").insert([
-        {
+      const response = await fetch('/api/rsvps', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          event_id: eventId, // ← NUEVO
           nombre: formData.nombre,
           apellido: formData.apellido,
           asistencia: formData.asistencia,
@@ -43,13 +57,11 @@ export default function RsvpForm() {
           mayores_diez: parseInt(formData.mayoresdiez),
           restricciones_alimentarias: formData.restricciones || null,
           mensaje: formData.mensaje || null,
-        },
-      ]);
+        }),
+      });
 
-      if (error) {
-        console.error("Error:", error);
-        alert("Error al guardar el formulario");
-        return;
+      if (!response.ok) {
+        throw new Error('Error al guardar');
       }
 
       setSubmitted(true);
@@ -68,12 +80,21 @@ export default function RsvpForm() {
           mensaje: "",
         });
       }, 4000);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error al guardar el formulario");
     } finally {
       setLoading(false);
     }
   };
 
   const totalAcompanantes = parseInt(formData.menoresCinco) + parseInt(formData.entrecincodiez) + parseInt(formData.mayoresdiez);
+
+  // Determinar qué campos mostrar según el tipo de evento
+  const allowsChildren = !['babyshower', 'corporativo'].includes(eventType || '');
+  const showCeremonyReception = eventType === 'wedding';
+  const requiresFormalMenu = ['wedding', 'quince', 'corporativo'].includes(eventType || '');
+  const showDressCode = ['wedding', 'quince', 'corporativo'].includes(eventType || '');
 
   return (
     <motion.div
@@ -166,7 +187,7 @@ export default function RsvpForm() {
           </div>
 
           {/* Acompañantes - Solo si confirma asistencia */}
-          {formData.asistencia === "si" && (
+          {formData.asistencia === "si" && allowsChildren && (
             <div>
               <h3 className={`text-xl font-semibold ${theme.text.heading} mb-4`}>Acompañantes</h3>
               <p className="text-sm text-gray-600 mb-4">Especifica la cantidad de personas que te acompañarán</p>
@@ -274,7 +295,8 @@ export default function RsvpForm() {
           <motion.button
             type="submit"
             disabled={loading}
-            className={`${tw.button} w-full`}
+            className="w-full px-8 py-3 rounded-full text-white font-semibold transition-all duration-300 hover:scale-105 disabled:opacity-50"
+            style={{ backgroundColor: 'var(--color-primary)' }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

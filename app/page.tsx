@@ -1,47 +1,102 @@
 "use client";
 
-import Hero from "./components/Hero";
-import Details from "./components/Details";
-import Countdown from "./components/Countdown";
-import Ceremony from "./components/Ceremony";
-import Gallery from "./components/Gallery";
-import Location from "./components/Location";
-import RsvpForm from "./components/RsvpForm";
-import Footer from "./components/Footer";
-import { section } from "framer-motion/m";
+import { useEffect } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function Home() {
+  // Actualizar título y favicon
+  useEffect(() => {
+    document.title = "Eventos Especiales";
+    
+    const faviconLink = document.querySelector("link[rel*='icon']") as HTMLLinkElement || document.createElement('link');
+    faviconLink.type = 'image/svg+xml';
+    faviconLink.rel = 'icon';
+    faviconLink.href = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎊</text></svg>`;
+    
+    if (!document.querySelector("link[rel*='icon']")) {
+      document.head.appendChild(faviconLink);
+    }
+  }, []);
+
   return (
-    <main className="min-h-screen bg-neutral-100 text-neutral-800">
-      <section>
-        <Hero />
-      </section>
-      
-      <section id="details">
-        <Countdown />
-      </section>
+    <main className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-purple-50 flex items-center justify-center px-6 py-12">
+      <div className="max-w-4xl w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center"
+        >
+          {/* Icono principal */}
+          <motion.div
+            className="text-8xl mb-8"
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            🎊
+          </motion.div>
 
-      <section>
-        <Ceremony />
-      </section>
+          {/* Título */}
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-rose-600 to-purple-600 bg-clip-text text-transparent">
+            Eventos Especiales
+          </h1>
 
-      <section>
-        <Gallery /> 
-      </section>
-      
-      <section>
-        <Location />
-      </section>
+          {/* Descripción */}
+          <p className="text-xl md:text-2xl text-gray-700 mb-4 max-w-2xl mx-auto">
+            Plataforma para gestionar y confirmar asistencia a tus eventos más importantes
+          </p>
 
-      {/* RSVP */}
-      <section id="rsvp" className="py-24 px-6 bg-white fade-up">
-        <h2 className="text-2xl font-serif mb-4 text-center">
-          ¿Nos acompañás en este día tan especial?
-        </h2>
-        <RsvpForm />
-      </section>
+          <p className="text-lg text-gray-600 mb-12 max-w-xl mx-auto">
+            Casamientos • 15 Años • Cumpleaños • Baby Showers • Eventos Corporativos
+          </p>
 
-      <Footer />
+          {/* Características */}
+          <motion.div
+            className="grid md:grid-cols-3 gap-6 mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="text-4xl mb-3">✨</div>
+              <h3 className="font-semibold text-lg mb-2">Personalizable</h3>
+              <p className="text-gray-600 text-sm">Diseña tu evento con colores y estilos únicos</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="text-4xl mb-3">📱</div>
+              <h3 className="font-semibold text-lg mb-2">Fácil de Usar</h3>
+              <p className="text-gray-600 text-sm">Confirmaciones de asistencia simples y rápidas</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="text-4xl mb-3">📊</div>
+              <h3 className="font-semibold text-lg mb-2">Control Total</h3>
+              <p className="text-gray-600 text-sm">Panel de administración completo</p>
+            </div>
+          </motion.div>
+
+          {/* Botón de acceso */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <Link
+              href="/admin-login"
+              className="inline-block bg-gradient-to-r from-rose-600 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all transform hover:scale-105"
+            >
+              Acceder al Panel 🔐
+            </Link>
+          </motion.div>
+
+          {/* Nota inferior */}
+          <p className="text-gray-500 text-sm mt-8">
+            ¿Recibiste una invitación? Accede usando el link personalizado que te enviaron.
+          </p>
+        </motion.div>
+      </div>
     </main>
   );
 }
