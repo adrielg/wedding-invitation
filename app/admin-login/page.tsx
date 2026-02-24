@@ -12,22 +12,18 @@ export default function AdminLogin() {
     setError("");
     
     try {
-      console.log("Intentando login...");
-      
       const res = await fetch("/api/admin-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
       });
 
-      console.log("Response status:", res.status);
-
       if (!res.ok) {
         setError("Contraseña incorrecta");
         return;
       }
 
-      console.log("Login exitoso, redirigiendo...");
+      router.refresh();
       router.push("/admin/dashboard");
     } catch (err) {
       console.error("Error en login:", err);
