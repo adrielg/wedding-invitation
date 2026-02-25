@@ -48,7 +48,7 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  title: "Eventos Especiales",
+  title: "Reservá la Fecha",
   description: "Gestión de eventos especiales e invitaciones",
 };
 
