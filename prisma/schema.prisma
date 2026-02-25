@@ -9,12 +9,14 @@ datasource db {
 }
 
 enum EventType {
-  wedding       // Boda
-  quince        // 15 años
-  infantil      // Cumpleaños infantil
-  babyshower    // Baby shower
-  corporativo   // Evento corporativo
-  otro          // Personalizado
+  wedding              // Casamiento
+  fifteen              // 15 Años
+  adult_birthday       // Cumpleaños Adulto
+  childrens_event      // Evento Infantil
+  babyshower           // Baby Shower
+  corporate            // Evento Corporativo
+  family_celebration   // Celebración Familiar
+  other                // Otro
 }
 
 model Event {

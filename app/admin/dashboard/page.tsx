@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { EVENT_TYPE_LABELS } from "@/lib/constants/event-types";
 import SignOutButton from "../../components/SignOutButton";
 
 interface Event {
@@ -111,17 +112,7 @@ export default function AdminDashboard() {
   };
 
   const getEventTypeLabel = (type: string) => {
-    const types: Record<string, string> = {
-      wedding: 'Casamiento',
-      quince: '15 Años',
-      'cumpleanos-adulto': 'Cumpleaños Adulto',
-      'evento-infantil': 'Evento Infantil',
-      babyshower: 'Baby Shower',
-      corporativo: 'Corporativo',
-      'celebracion-familiar': 'Celebración Familiar',
-      otro: 'Otro'
-    };
-    return types[type] || type;
+    return EVENT_TYPE_LABELS[type] || type;
   };
 
   if (loading) {

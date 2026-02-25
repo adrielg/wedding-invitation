@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { theme, tw } from "@/app/styles/theme";
+import { TYPES_WITHOUT_CHILDREN, TYPES_WITH_CEREMONY, TYPES_WITH_FORMAL_MENU, TYPES_WITH_DRESS_CODE } from "@/lib/constants/event-types";
 
 interface RsvpFormProps {
   eventId: string;
@@ -91,10 +92,10 @@ export default function RsvpForm({ eventId, eventType, eventConfig }: RsvpFormPr
   const totalAcompanantes = parseInt(formData.menoresCinco) + parseInt(formData.entrecincodiez) + parseInt(formData.mayoresdiez);
 
   // Determinar qué campos mostrar según el tipo de evento
-  const allowsChildren = !['babyshower', 'corporativo'].includes(eventType || '');
-  const showCeremonyReception = eventType === 'wedding';
-  const requiresFormalMenu = ['wedding', 'quince', 'corporativo'].includes(eventType || '');
-  const showDressCode = ['wedding', 'quince', 'corporativo'].includes(eventType || '');
+  const allowsChildren = !TYPES_WITHOUT_CHILDREN.includes(eventType as any);
+  const showCeremonyReception = TYPES_WITH_CEREMONY.includes(eventType as any);
+  const requiresFormalMenu = TYPES_WITH_FORMAL_MENU.includes(eventType as any);
+  const showDressCode = TYPES_WITH_DRESS_CODE.includes(eventType as any);
 
   return (
     <motion.div

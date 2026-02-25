@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { EVENT_TYPES, TYPES_WITH_CEREMONY } from "@/lib/constants/event-types";
 
 export default function CreateEventPage() {
   const router = useRouter();
@@ -208,14 +209,9 @@ export default function CreateEventPage() {
                     required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                   >
-                    <option value="wedding">Casamiento</option>
-                    <option value="quince">15 Años</option>
-                    <option value="cumpleanos-adulto">Cumpleaños Adulto</option>
-                    <option value="evento-infantil">Evento Infantil</option>
-                    <option value="babyshower">Baby Shower</option>
-                    <option value="corporativo">Evento Corporativo</option>
-                    <option value="celebracion-familiar">Celebración Familiar</option>
-                    <option value="otro">Otro</option>
+                    {EVENT_TYPES.map((t) => (
+                      <option key={t.value} value={t.value}>{t.label}</option>
+                    ))}
                   </select>
                   <p className="text-xs text-gray-500 mt-1">
                     El tipo determina qué campos se mostrarán en el formulario de confirmación
@@ -307,7 +303,7 @@ export default function CreateEventPage() {
                   </p>
                 </div>
 
-                {formData.type === "wedding" && (
+                {TYPES_WITH_CEREMONY.includes(formData.type as any) && (
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">

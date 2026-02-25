@@ -1,4 +1,6 @@
-export type EventType = 'wedding' | 'quince' | 'infantil' | 'babyshower' | 'corporativo' | 'otro'
+import { EventTypeValue } from '../constants/event-types'
+
+export type EventType = EventTypeValue
 
 export interface Event {
   id: string

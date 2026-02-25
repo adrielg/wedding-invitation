@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
+import { EVENT_TYPES } from "@/lib/constants/event-types";
 
 export default function EditEventPage() {
   const router = useRouter();
@@ -246,12 +247,9 @@ export default function EditEventPage() {
                     required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                   >
-                    <option value="wedding">Boda</option>
-                    <option value="quince">15 Años</option>
-                    <option value="infantil">Cumpleaños Infantil</option>
-                    <option value="babyshower">Baby Shower</option>
-                    <option value="corporativo">Evento Corporativo</option>
-                    <option value="otro">Otro</option>
+                    {EVENT_TYPES.map((t) => (
+                      <option key={t.value} value={t.value}>{t.label}</option>
+                    ))}
                   </select>
                 </div>
 

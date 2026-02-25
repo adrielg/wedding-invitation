@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { TYPES_WITH_CEREMONY } from "@/lib/constants/event-types";
 
 interface DetailsProps {
   eventType?: string | null;
@@ -62,7 +63,7 @@ export default function Details({
             </motion.div>
           )}
 
-          {eventType === "wedding" && (ceremonyTime || receptionTime) && (
+          {TYPES_WITH_CEREMONY.includes(eventType as any) && (ceremonyTime || receptionTime) && (
             <motion.div
               className="p-6 rounded-lg"
               style={{ 

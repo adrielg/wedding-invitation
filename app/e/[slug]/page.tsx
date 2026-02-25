@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import RsvpForm from "@/app/components/RsvpForm";
 import Hero from "@/app/components/Hero";
 import Countdown from "@/app/components/Countdown";
+import { EVENT_TYPE_ICONS } from "@/lib/constants/event-types";
 import Details from "@/app/components/Details";
 import Location from "@/app/components/Location";
 import Timeline from "@/app/components/Timeline";
@@ -60,18 +61,7 @@ export default function EventPage() {
   useEffect(() => {
     if (!event) return;
 
-    const eventIcons: Record<string, string> = {
-      wedding: '💍',
-      quince: '🎉',
-      'cumpleanos-adulto': '🎂',
-      'evento-infantil': '🎈',
-      babyshower: '👶',
-      corporativo: '💼',
-      'celebracion-familiar': '🎊',
-      otro: '🎆'
-    };
-
-    const eventIcon = eventIcons[event.type] || eventIcons.otro;
+    const eventIcon = EVENT_TYPE_ICONS[event.type] || '🎆';
     
     // Título solo con el nombre del evento
     document.title = event.name;
