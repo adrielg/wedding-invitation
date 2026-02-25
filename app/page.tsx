@@ -77,23 +77,39 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Botón de acceso */}
+          {/* Botones de acción */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
             <Link
-              href="/admin-login"
+              href="/e/demo"
               className="inline-block bg-gradient-to-r from-rose-600 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all transform hover:scale-105"
             >
-              Acceder al Panel 🔐
+              Ver Demo ✨
             </Link>
+            <a
+              href="https://wa.me/5493434386611?text=Hola!%20Me%20interesa%20crear%20una%20invitación%20digital%20para%20mi%20evento"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block border-2 border-rose-600 text-rose-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-rose-50 hover:shadow-xl transition-all transform hover:scale-105"
+            >
+              Contactanos 💬
+            </a>
           </motion.div>
 
           {/* Nota inferior */}
           <p className="text-gray-500 text-sm mt-8">
             ¿Recibiste una invitación? Accede usando el link personalizado que te enviaron.
+          </p>
+
+          {/* Link discreto para admin */}
+          <p className="text-gray-400 text-xs mt-4">
+            <Link href="/admin-login" className="hover:text-gray-600 transition-colors">
+              Administrador
+            </Link>
           </p>
         </motion.div>
       </div>
