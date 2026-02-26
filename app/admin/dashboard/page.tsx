@@ -19,17 +19,17 @@ interface Event {
 /* ── Skeleton loader ── */
 function SkeletonCard() {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 animate-pulse">
-      <div className="flex items-center gap-4 mb-4">
-        <div className="w-12 h-12 rounded-xl bg-gray-200" />
+    <div className="bg-gray-900 rounded-xl border border-gray-800 p-5 animate-pulse">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-10 h-10 rounded-lg bg-gray-800" />
         <div className="flex-1 space-y-2">
-          <div className="h-4 bg-gray-200 rounded w-3/4" />
-          <div className="h-3 bg-gray-100 rounded w-1/2" />
+          <div className="h-4 bg-gray-800 rounded w-3/4" />
+          <div className="h-3 bg-gray-800/60 rounded w-1/2" />
         </div>
       </div>
       <div className="space-y-2">
-        <div className="h-3 bg-gray-100 rounded w-full" />
-        <div className="h-3 bg-gray-100 rounded w-2/3" />
+        <div className="h-3 bg-gray-800/60 rounded w-full" />
+        <div className="h-3 bg-gray-800/60 rounded w-2/3" />
       </div>
     </div>
   );
@@ -43,8 +43,8 @@ function Toast({ message, type, onClose }: { message: string; type: "success" | 
   }, [onClose]);
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3 rounded-xl shadow-lg text-white text-sm font-medium transition-all animate-[slideUp_0.3s_ease-out] ${
-      type === "success" ? "bg-emerald-600" : "bg-red-600"
+    <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-lg border text-sm font-medium transition-all animate-[slideUp_0.3s_ease-out] ${
+      type === "success" ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400" : "bg-red-500/10 border-red-500/20 text-red-400"
     }`}>
       <span>{type === "success" ? "✓" : "✕"}</span>
       <span>{message}</span>
@@ -58,18 +58,18 @@ function ConfirmModal({ title, message, onConfirm, onCancel }: {
   title: string; message: string; onConfirm: () => void; onCancel: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-[fadeIn_0.2s_ease-out]">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 animate-[scaleIn_0.2s_ease-out]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-[fadeIn_0.2s_ease-out]">
+      <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 max-w-md w-full mx-4 animate-[scaleIn_0.2s_ease-out]">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-lg">⚠️</div>
-          <h3 className="text-lg font-bold text-gray-900">{title}</h3>
+          <div className="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center text-sm text-red-400">⚠</div>
+          <h3 className="text-base font-semibold text-white">{title}</h3>
         </div>
-        <p className="text-gray-600 mb-6 leading-relaxed">{message}</p>
+        <p className="text-gray-400 text-sm mb-6 leading-relaxed">{message}</p>
         <div className="flex gap-3 justify-end">
-          <button onClick={onCancel} className="px-5 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-colors">
+          <button onClick={onCancel} className="px-4 py-2 text-sm font-medium text-gray-400 bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-750 hover:text-gray-300 transition-colors">
             Cancelar
           </button>
-          <button onClick={onConfirm} className="px-5 py-2.5 text-sm font-medium text-white bg-red-600 rounded-xl hover:bg-red-700 transition-colors">
+          <button onClick={onConfirm} className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
             Eliminar
           </button>
         </div>
@@ -196,21 +196,21 @@ export default function AdminDashboard() {
   /* ── Loading state ── */
   if (loading) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-rose-50/30">
+      <main className="min-h-screen bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="animate-pulse mb-10">
-            <div className="h-8 bg-gray-200 rounded w-64 mb-2" />
-            <div className="h-4 bg-gray-100 rounded w-48" />
+            <div className="h-7 bg-gray-800 rounded w-48 mb-2" />
+            <div className="h-4 bg-gray-800/60 rounded w-36" />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 animate-pulse">
-                <div className="h-4 bg-gray-200 rounded w-20 mb-3" />
-                <div className="h-8 bg-gray-200 rounded w-12" />
+              <div key={i} className="bg-gray-900 rounded-xl border border-gray-800 p-4 animate-pulse">
+                <div className="h-3 bg-gray-800 rounded w-16 mb-3" />
+                <div className="h-7 bg-gray-800 rounded w-10" />
               </div>
             ))}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[...Array(6)].map((_, i) => <SkeletonCard key={i} />)}
           </div>
         </div>
@@ -219,7 +219,10 @@ export default function AdminDashboard() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-rose-50/30">
+    <main className="min-h-screen bg-gray-950 relative">
+      {/* Subtle grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.015)_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
+
       {/* Toast */}
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
 
@@ -233,21 +236,21 @@ export default function AdminDashboard() {
         />
       )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
         {/* ── Header ── */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
+            <h1 className="text-2xl font-semibold text-white tracking-tight">
               Panel de Eventos
             </h1>
-            <p className="text-gray-500 mt-1">Gestiona todos tus eventos desde aquí</p>
+            <p className="text-gray-500 text-sm mt-1">Gestiona todos tus eventos desde aquí</p>
           </div>
           <div className="flex items-center gap-3">
             <Link
               href="/admin/events/create"
-              className="inline-flex items-center gap-2 bg-rose-600 text-white px-5 py-2.5 rounded-xl font-medium shadow-md shadow-rose-200 hover:bg-rose-700 hover:shadow-lg hover:shadow-rose-200 active:scale-[0.98] transition-all"
+              className="inline-flex items-center gap-2 bg-white text-gray-900 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 active:scale-[0.98] transition-all"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
               Nuevo evento
             </Link>
             <SignOutButton />
@@ -256,50 +259,42 @@ export default function AdminDashboard() {
 
         {/* ── Error banner ── */}
         {error && (
-          <div className="flex items-center gap-3 bg-red-50 border border-red-200 text-red-800 px-5 py-4 rounded-2xl mb-8 animate-[fadeIn_0.3s_ease-out]">
-            <span className="text-lg">⚠️</span>
-            <div>
-              <p className="font-semibold text-sm">Ocurrió un error</p>
-              <p className="text-sm text-red-600">{error}</p>
-            </div>
+          <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg mb-8 text-sm animate-[fadeIn_0.3s_ease-out]">
+            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" /></svg>
+            <span>{error}</span>
           </div>
         )}
 
         {/* ── Stats cards ── */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
           {[
-            { label: "Total", value: stats.total, icon: "📋", color: "from-blue-500 to-blue-600", bg: "bg-blue-50" },
-            { label: "Activos", value: stats.active, icon: "✅", color: "from-emerald-500 to-emerald-600", bg: "bg-emerald-50" },
-            { label: "Inactivos", value: stats.inactive, icon: "⏸️", color: "from-gray-400 to-gray-500", bg: "bg-gray-50" },
-            { label: "Próximos", value: stats.upcoming, icon: "📅", color: "from-violet-500 to-violet-600", bg: "bg-violet-50" },
+            { label: "Total", value: stats.total, accent: "text-blue-400" },
+            { label: "Activos", value: stats.active, accent: "text-emerald-400" },
+            { label: "Inactivos", value: stats.inactive, accent: "text-gray-500" },
+            { label: "Próximos", value: stats.upcoming, accent: "text-violet-400" },
           ].map((stat) => (
-            <div key={stat.label} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow group">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">{stat.label}</span>
-                <span className={`w-9 h-9 rounded-xl ${stat.bg} flex items-center justify-center text-base group-hover:scale-110 transition-transform`}>
-                  {stat.icon}
-                </span>
-              </div>
-              <p className="text-3xl font-extrabold text-gray-900">{stat.value}</p>
+            <div key={stat.label} className="bg-gray-900 rounded-xl border border-gray-800 p-4 hover:border-gray-700 transition-colors">
+              <span className="text-xs font-medium uppercase tracking-wider text-gray-500">{stat.label}</span>
+              <p className={`text-2xl font-bold mt-1 ${stat.accent}`}>{stat.value}</p>
             </div>
           ))}
         </div>
 
         {/* ── Filters bar ── */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-8">
+        <div className="bg-gray-900 rounded-xl border border-gray-800 p-3 mb-6">
           <div className="flex flex-col sm:flex-row gap-3">
             {/* Search */}
             <div className="relative flex-1">
-              <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
               <input
                 type="text"
                 placeholder="Buscar por nombre o slug..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-400 transition-all placeholder:text-gray-400"
+                className="w-full pl-9 pr-4 py-2 text-sm bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 focus:border-gray-600 transition-all placeholder:text-gray-600"
               />
               {search && (
-                <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
                 </button>
               )}
@@ -308,7 +303,7 @@ export default function AdminDashboard() {
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
-              className="px-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-400 transition-all text-gray-700"
+              className="px-3 py-2 text-sm bg-gray-800 border border-gray-700 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-white/10 focus:border-gray-600 transition-all"
             >
               <option value="all">Todos los tipos</option>
               {eventTypesPresent.map((t) => (
@@ -319,7 +314,7 @@ export default function AdminDashboard() {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-400 transition-all text-gray-700"
+              className="px-3 py-2 text-sm bg-gray-800 border border-gray-700 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-white/10 focus:border-gray-600 transition-all"
             >
               <option value="all">Todos los estados</option>
               <option value="active">Activos</option>
@@ -328,11 +323,11 @@ export default function AdminDashboard() {
           </div>
           {/* Active filters summary */}
           {(search || filterType !== "all" || filterStatus !== "all") && (
-            <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100">
-              <span className="text-xs text-gray-400">Mostrando {filteredEvents.length} de {events.length}</span>
+            <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-800">
+              <span className="text-xs text-gray-500">Mostrando {filteredEvents.length} de {events.length}</span>
               <button
                 onClick={() => { setSearch(""); setFilterType("all"); setFilterStatus("all"); }}
-                className="text-xs text-rose-600 hover:text-rose-700 font-medium ml-auto"
+                className="text-xs text-gray-400 hover:text-white font-medium ml-auto"
               >
                 Limpiar filtros
               </button>
@@ -342,90 +337,90 @@ export default function AdminDashboard() {
 
         {/* ── Event cards grid ── */}
         {filteredEvents.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredEvents.map((event) => {
               const isPast = new Date(event.date) < new Date();
               const colors = getEventTypeColors(event.type);
               return (
                 <div
                   key={event.id}
-                  className={`group relative bg-white rounded-2xl shadow-sm border overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5 ${
+                  className={`group relative bg-gray-900 rounded-xl border overflow-hidden transition-all hover:-translate-y-0.5 ${
                     !event.is_active
-                      ? "border-gray-200 opacity-60 grayscale-[30%]"
+                      ? "border-gray-800 opacity-50"
                       : isPast
-                      ? `${colors.border} opacity-80`
-                      : `${colors.border} hover:shadow-xl`
+                      ? "border-gray-800 opacity-70"
+                      : "border-gray-800 hover:border-gray-700"
                   }`}
                 >
                   {/* Color accent bar */}
-                  <div className={`h-1.5 bg-gradient-to-r ${colors.gradient} ${
-                    !event.is_active ? "opacity-30" : isPast ? "opacity-50" : ""
+                  <div className={`h-1 bg-gradient-to-r ${colors.gradient} ${
+                    !event.is_active ? "opacity-20" : isPast ? "opacity-40" : "opacity-80"
                   }`} />
 
-                  {/* Status badge */}
-                  {(!event.is_active || isPast) && (
-                    <div className={`absolute top-4 right-4 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
-                      !event.is_active
-                        ? "bg-gray-100 text-gray-500"
-                        : "bg-amber-100 text-amber-700"
-                    }`}>
-                      {!event.is_active ? "Inactivo" : "Finalizado"}
-                    </div>
-                  )}
-
-                  {/* Card header */}
-                  <div className="p-5 pb-3">
+                  {/* Card body */}
+                  <div className="p-4">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-3 min-w-0">
-                        <span className={`w-12 h-12 rounded-xl ${colors.bg} flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform ring-1 ring-inset ring-black/5`}>
+                        <span className="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center text-lg shrink-0">
                           {getEventTypeIcon(event.type)}
                         </span>
                         <div className="min-w-0">
-                          <h3 className="font-bold text-gray-900 truncate leading-tight text-[15px]">{event.name}</h3>
-                          <span className={`text-xs font-semibold ${colors.text}`}>{getEventTypeLabel(event.type)}</span>
+                          <h3 className="font-semibold text-white truncate leading-tight text-sm">{event.name}</h3>
+                          <span className="text-xs text-gray-500">{getEventTypeLabel(event.type)}</span>
                         </div>
                       </div>
-                      {/* Toggle */}
-                      <button
-                        onClick={() => handleToggleActive(event.id, event.is_active)}
-                        disabled={togglingId === event.id}
-                        className={`relative shrink-0 w-11 h-6 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 mt-1 ${
-                          event.is_active ? "bg-emerald-500" : "bg-gray-300"
-                        } ${togglingId === event.id ? "opacity-50 cursor-wait" : "cursor-pointer"}`}
-                        title={event.is_active ? "Desactivar" : "Activar"}
-                      >
-                        <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${
-                          event.is_active ? "translate-x-5" : "translate-x-0"
-                        }`} />
-                      </button>
+                      {/* Status */}
+                      <div className="flex items-center gap-2 shrink-0">
+                        {(!event.is_active || isPast) && (
+                          <span className={`text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded ${
+                            !event.is_active
+                              ? "bg-gray-800 text-gray-500"
+                              : "bg-amber-500/10 text-amber-500"
+                          }`}>
+                            {!event.is_active ? "Off" : "Fin"}
+                          </span>
+                        )}
+                        <button
+                          onClick={() => handleToggleActive(event.id, event.is_active)}
+                          disabled={togglingId === event.id}
+                          className={`relative shrink-0 w-9 h-5 rounded-full transition-colors focus:outline-none ${
+                            event.is_active ? "bg-emerald-500" : "bg-gray-700"
+                          } ${togglingId === event.id ? "opacity-50 cursor-wait" : "cursor-pointer"}`}
+                          title={event.is_active ? "Desactivar" : "Activar"}
+                        >
+                          <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
+                            event.is_active ? "translate-x-4" : "translate-x-0"
+                          }`} />
+                        </button>
+                      </div>
                     </div>
 
                     {/* Info rows */}
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center gap-2 text-sm text-gray-500">
-                        <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>
+                    <div className="space-y-1.5 mb-3">
+                      <div className="flex items-center gap-2 text-xs text-gray-500">
+                        <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>
                         <span>{formatDate(event.date)}</span>
-                        <span className={`ml-auto text-xs font-semibold px-2.5 py-0.5 rounded-full ${
+                        <span className={`ml-auto text-[10px] font-semibold px-1.5 py-0.5 rounded ${
                           isPast
-                            ? "bg-gray-100 text-gray-500"
-                            : "bg-emerald-50 text-emerald-700"
+                            ? "bg-gray-800 text-gray-500"
+                            : "bg-emerald-500/10 text-emerald-400"
                         }`}>
                           {daysUntil(event.date)}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-500">
-                        <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m9.86-2.036a4.5 4.5 0 0 0-1.242-7.244l4.5-4.5a4.5 4.5 0 0 1 6.364 6.364l-1.757 1.757" /></svg>
-                        <code className={`text-xs ${colors.bg} px-2 py-0.5 rounded-md font-mono ${colors.text} truncate`}>/e/{event.slug}</code>
+                      <div className="flex items-center gap-2 text-xs text-gray-500">
+                        <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m9.86-2.036a4.5 4.5 0 0 0-1.242-7.244l4.5-4.5a4.5 4.5 0 0 1 6.364 6.364l-1.757 1.757" /></svg>
+                        <code className="text-xs bg-gray-800 px-1.5 py-0.5 rounded font-mono text-gray-400 truncate">/e/{event.slug}</code>
                       </div>
                     </div>
                   </div>
 
                   {/* Card actions */}
-                  <div className={`border-t ${colors.border} bg-gradient-to-r from-transparent ${colors.bg}/50 to-transparent px-5 py-3 flex items-center gap-1`}>
+                  <div className="border-t border-gray-800 px-4 py-2.5 flex items-center gap-1">
                     <Link
                       href={`/e/${event.slug}`}
                       target="_blank"
-                      className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-blue-600 px-2.5 py-1.5 rounded-lg hover:bg-blue-50 transition-colors"
+                      className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-white px-2 py-1 rounded-md hover:bg-gray-800 transition-colors"
                       title="Ver evento"
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
@@ -433,7 +428,7 @@ export default function AdminDashboard() {
                     </Link>
                     <Link
                       href={`/admin/events/${event.id}/edit`}
-                      className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-indigo-600 px-2.5 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors"
+                      className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-white px-2 py-1 rounded-md hover:bg-gray-800 transition-colors"
                       title="Editar evento"
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125" /></svg>
@@ -441,7 +436,7 @@ export default function AdminDashboard() {
                     </Link>
                     <Link
                       href={`/admin/events/${event.id}/rsvps`}
-                      className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-emerald-600 px-2.5 py-1.5 rounded-lg hover:bg-emerald-50 transition-colors"
+                      className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-white px-2 py-1 rounded-md hover:bg-gray-800 transition-colors"
                       title="Ver RSVPs"
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" /></svg>
@@ -449,7 +444,7 @@ export default function AdminDashboard() {
                     </Link>
                     <button
                       onClick={() => setDeleteModal({ id: event.id, name: event.name })}
-                      className="flex items-center gap-1.5 text-xs font-medium text-gray-400 hover:text-red-600 px-2.5 py-1.5 rounded-lg hover:bg-red-50 transition-colors ml-auto"
+                      className="flex items-center gap-1.5 text-xs font-medium text-gray-600 hover:text-red-400 px-2 py-1 rounded-md hover:bg-red-500/10 transition-colors ml-auto"
                       title="Eliminar evento"
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg>
@@ -462,29 +457,29 @@ export default function AdminDashboard() {
         ) : (
           /* Empty state */
           <div className="flex flex-col items-center justify-center py-20 px-4">
-            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center text-4xl mb-6 animate-bounce">
+            <div className="w-14 h-14 rounded-xl bg-gray-800 flex items-center justify-center text-2xl mb-5">
               {events.length === 0 ? "🎉" : "🔍"}
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              {events.length === 0 ? "¡Crea tu primer evento!" : "Sin resultados"}
+            <h3 className="text-base font-semibold text-white mb-1">
+              {events.length === 0 ? "Crea tu primer evento" : "Sin resultados"}
             </h3>
-            <p className="text-gray-500 text-center max-w-sm mb-6">
+            <p className="text-gray-500 text-sm text-center max-w-xs mb-6">
               {events.length === 0
                 ? "Comienza creando un evento para que tus invitados puedan confirmar asistencia."
-                : "No se encontraron eventos que coincidan con tu búsqueda. Prueba con otros filtros."}
+                : "No se encontraron eventos con esos filtros."}
             </p>
             {events.length === 0 ? (
               <Link
                 href="/admin/events/create"
-                className="inline-flex items-center gap-2 bg-rose-600 text-white px-6 py-3 rounded-xl font-medium shadow-md shadow-rose-200 hover:bg-rose-700 transition-all"
+                className="inline-flex items-center gap-2 bg-white text-gray-900 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition-all"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                 Crear evento
               </Link>
             ) : (
               <button
                 onClick={() => { setSearch(""); setFilterType("all"); setFilterStatus("all"); }}
-                className="text-rose-600 hover:text-rose-700 font-medium text-sm"
+                className="text-gray-400 hover:text-white text-sm font-medium"
               >
                 Limpiar filtros →
               </button>
