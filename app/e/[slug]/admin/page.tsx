@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import * as XLSX from "xlsx";
 
 interface Rsvp {
   id: string;
@@ -34,6 +33,7 @@ export default function EventAdminPage() {
   const [event, setEvent] = useState<Event | null>(null);
   const [rsvps, setRsvps] = useState<Rsvp[]>([]);
   const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -42,9 +42,11 @@ export default function EventAdminPage() {
         // Verificar token
         const token = localStorage.getItem(`event_auth_${slug}`);
         if (!token) {
-          router.push(`/e/${slug}/admin-login`);
+          router.replace(`/e/${slug}/admin-login`);
           return;
         }
+
+        setAuthenticated(true);
 
         // Obtener datos del evento
         const eventResponse = await fetch(`/api/events/by-slug/${slug}`);
@@ -87,8 +89,10 @@ export default function EventAdminPage() {
     router.push(`/e/${slug}`);
   };
 
-  const exportToExcel = () => {
+  const exportToExcel = async () => {
     if (!rsvps || rsvps.length === 0) return;
+
+    const XLSX = await import("xlsx");
 
     const rows = rsvps.map((rsvp) => ({
       Nombre: rsvp.nombre,
@@ -127,10 +131,13 @@ export default function EventAdminPage() {
     }, 0)
   };
 
-  if (loading) {
+  if (loading || !authenticated) {
     return (
-      <main className="p-10">
-        <p>Cargando...</p>
+      <main className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-600 mx-auto mb-4"></div>
+          <p className="text-gray-500">Verificando acceso...</p>
+        </div>
       </main>
     );
   }

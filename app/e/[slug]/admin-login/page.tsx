@@ -12,7 +12,18 @@ export default function EventAdminLoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [checking, setChecking] = useState(true);
   const [eventName, setEventName] = useState<string>("");
+
+  // Si ya tiene token, redirigir al panel directamente
+  useEffect(() => {
+    const token = localStorage.getItem(`event_auth_${slug}`);
+    if (token) {
+      router.replace(`/e/${slug}/admin`);
+    } else {
+      setChecking(false);
+    }
+  }, [slug, router]);
 
   useEffect(() => {
     document.title = "Acceso - Panel del Evento";
@@ -73,6 +84,14 @@ export default function EventAdminLoginPage() {
       setLoading(false);
     }
   };
+
+  if (checking) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-white to-purple-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-600"></div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-purple-50 flex items-center justify-center px-6 py-12">

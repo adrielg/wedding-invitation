@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import * as XLSX from "xlsx";
 
 interface Rsvp {
   id: string;
@@ -85,8 +84,10 @@ export default function EventRsvpsPage() {
     checkAuthAndFetchData();
   }, [eventId, router]);
 
-  const exportToExcel = () => {
+  const exportToExcel = async () => {
     if (!rsvps || rsvps.length === 0) return;
+
+    const XLSX = await import("xlsx");
 
     const rows = rsvps.map((rsvp) => ({
       Nombre: rsvp.nombre,
