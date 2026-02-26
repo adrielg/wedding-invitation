@@ -61,8 +61,8 @@ export default function AdminLogin() {
         {/* Card */}
         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8">
           {/* Header */}
-          <div className="mb-8">
-            <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mb-5">
+          <div className="mb-8 text-center">
+            <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mb-5 mx-auto">
               <svg className="w-5 h-5 text-white/70" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
               </svg>
