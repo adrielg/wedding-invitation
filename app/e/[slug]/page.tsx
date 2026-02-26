@@ -92,6 +92,11 @@ export default function EventPage() {
         if (!data.is_active) {
           throw new Error('Este evento no está disponible');
         }
+
+        // Verificar si el evento ya pasó
+        if (new Date(data.date) < new Date()) {
+          throw new Error('Este evento ya ha finalizado');
+        }
         
         setEvent(data);
       } catch (err) {
@@ -113,12 +118,110 @@ export default function EventPage() {
   }
 
   if (error || !event) {
+    const isExpired = error === 'Este evento ya ha finalizado';
+    const isInactive = error === 'Este evento no está disponible';
+
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Evento no encontrado</h1>
-          <p className="text-gray-600">{error}</p>
-        </div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-rose-50/30 px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-lg"
+        >
+          {/* Ilustración SVG */}
+          <div className="mx-auto mb-8 w-48 h-48 relative">
+            {isExpired ? (
+              // Reloj de arena / calendario finalizado
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                <circle cx="100" cy="100" r="90" fill="url(#expiredGrad)" opacity="0.1" />
+                <circle cx="100" cy="100" r="70" fill="url(#expiredGrad)" opacity="0.08" />
+                <rect x="55" y="40" width="90" height="100" rx="12" fill="white" stroke="#e5e7eb" strokeWidth="2" />
+                <rect x="55" y="40" width="90" height="28" rx="12" fill="url(#expiredGrad)" />
+                <rect x="55" y="56" width="90" height="12" fill="url(#expiredGrad)" />
+                <circle cx="72" cy="54" r="4" fill="white" />
+                <circle cx="128" cy="54" r="4" fill="white" />
+                <line x1="55" y1="80" x2="145" y2="80" stroke="#f3f4f6" strokeWidth="1.5" />
+                <text x="75" y="100" fontSize="11" fill="#9ca3af" fontFamily="sans-serif">FIN</text>
+                <rect x="70" y="106" width="20" height="6" rx="3" fill="#e5e7eb" />
+                <rect x="96" y="106" width="20" height="6" rx="3" fill="#e5e7eb" />
+                <rect x="70" y="118" width="20" height="6" rx="3" fill="#e5e7eb" />
+                <rect x="96" y="118" width="20" height="6" rx="3" fill="#e5e7eb" />
+                <circle cx="145" cy="130" r="28" fill="white" stroke="#f97316" strokeWidth="2.5" />
+                <path d="M145 112v20" stroke="#f97316" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M145 118l8 8" stroke="#f97316" strokeWidth="2.5" strokeLinecap="round" />
+                <circle cx="145" cy="112" r="2" fill="#f97316" />
+                <defs>
+                  <linearGradient id="expiredGrad" x1="55" y1="40" x2="145" y2="140">
+                    <stop stopColor="#f97316" />
+                    <stop offset="1" stopColor="#fb923c" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            ) : isInactive ? (
+              // Evento pausado
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                <circle cx="100" cy="100" r="90" fill="url(#inactiveGrad)" opacity="0.08" />
+                <circle cx="100" cy="100" r="70" fill="url(#inactiveGrad)" opacity="0.06" />
+                <rect x="50" y="55" width="100" height="90" rx="16" fill="white" stroke="#e5e7eb" strokeWidth="2" />
+                <rect x="65" y="72" width="70" height="8" rx="4" fill="#e5e7eb" />
+                <rect x="65" y="88" width="50" height="8" rx="4" fill="#f3f4f6" />
+                <rect x="65" y="104" width="60" height="8" rx="4" fill="#f3f4f6" />
+                <rect x="65" y="120" width="40" height="8" rx="4" fill="#f3f4f6" />
+                <circle cx="148" cy="55" r="28" fill="white" stroke="#8b5cf6" strokeWidth="2.5" />
+                <rect x="139" y="43" width="5" height="24" rx="2.5" fill="#8b5cf6" />
+                <rect x="149" y="43" width="5" height="24" rx="2.5" fill="#8b5cf6" />
+                <circle cx="56" cy="55" r="14" fill="url(#inactiveGrad)" opacity="0.15" />
+                <path d="M52 55h8M56 51v8" stroke="#8b5cf6" strokeWidth="1.5" strokeLinecap="round" />
+                <defs>
+                  <linearGradient id="inactiveGrad" x1="50" y1="50" x2="150" y2="150">
+                    <stop stopColor="#8b5cf6" />
+                    <stop offset="1" stopColor="#a78bfa" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            ) : (
+              // No encontrado
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                <circle cx="100" cy="100" r="90" fill="url(#notfoundGrad)" opacity="0.08" />
+                <circle cx="100" cy="100" r="70" fill="url(#notfoundGrad)" opacity="0.06" />
+                <circle cx="90" cy="88" r="36" fill="white" stroke="#e5e7eb" strokeWidth="2" />
+                <circle cx="90" cy="88" r="26" stroke="#f43f5e" strokeWidth="3" strokeDasharray="6 4" />
+                <line x1="112" y1="110" x2="142" y2="140" stroke="#f43f5e" strokeWidth="5" strokeLinecap="round" />
+                <path d="M82 84h16M82 92h16" stroke="#fda4af" strokeWidth="2" strokeLinecap="round" />
+                <circle cx="60" cy="135" r="10" fill="#fef2f2" stroke="#fecaca" strokeWidth="1.5" />
+                <text x="56.5" y="139" fontSize="11" fill="#f43f5e">?</text>
+                <circle cx="150" cy="65" r="8" fill="#fef2f2" stroke="#fecaca" strokeWidth="1.5" />
+                <text x="147" y="69" fontSize="9" fill="#f43f5e">?</text>
+                <defs>
+                  <linearGradient id="notfoundGrad" x1="50" y1="50" x2="150" y2="150">
+                    <stop stopColor="#f43f5e" />
+                    <stop offset="1" stopColor="#fb7185" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            )}
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
+            {isExpired ? 'Evento finalizado' : isInactive ? 'Evento no disponible' : 'Evento no encontrado'}
+          </h1>
+          <p className="text-gray-500 leading-relaxed text-lg mb-8">
+            {isExpired
+              ? 'Este evento ya ha pasado. ¡Gracias por tu interés!'
+              : isInactive
+              ? 'Este evento no se encuentra disponible en este momento.'
+              : 'No pudimos encontrar el evento que buscás. Verificá el enlace e intentá de nuevo.'}
+          </p>
+
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
+            Volver al inicio
+          </a>
+        </motion.div>
       </div>
     );
   }
