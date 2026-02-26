@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { EVENT_TYPE_LABELS, EVENT_TYPE_ICONS } from "@/lib/constants/event-types";
+import { EVENT_TYPE_LABELS, EVENT_TYPE_ICONS, getEventTypeColors } from "@/lib/constants/event-types";
 import SignOutButton from "../../components/SignOutButton";
 
 interface Event {
@@ -345,30 +345,51 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {filteredEvents.map((event) => {
               const isPast = new Date(event.date) < new Date();
+              const colors = getEventTypeColors(event.type);
               return (
                 <div
                   key={event.id}
-                  className={`group bg-white rounded-2xl shadow-sm border transition-all hover:shadow-lg hover:-translate-y-0.5 ${
-                    event.is_active ? "border-gray-100" : "border-gray-200 opacity-75"
+                  className={`group relative bg-white rounded-2xl shadow-sm border overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5 ${
+                    !event.is_active
+                      ? "border-gray-200 opacity-60 grayscale-[30%]"
+                      : isPast
+                      ? `${colors.border} opacity-80`
+                      : `${colors.border} hover:shadow-xl`
                   }`}
                 >
+                  {/* Color accent bar */}
+                  <div className={`h-1.5 bg-gradient-to-r ${colors.gradient} ${
+                    !event.is_active ? "opacity-30" : isPast ? "opacity-50" : ""
+                  }`} />
+
+                  {/* Status badge */}
+                  {(!event.is_active || isPast) && (
+                    <div className={`absolute top-4 right-4 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                      !event.is_active
+                        ? "bg-gray-100 text-gray-500"
+                        : "bg-amber-100 text-amber-700"
+                    }`}>
+                      {!event.is_active ? "Inactivo" : "Finalizado"}
+                    </div>
+                  )}
+
                   {/* Card header */}
                   <div className="p-5 pb-3">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-3 min-w-0">
-                        <span className="w-11 h-11 rounded-xl bg-gradient-to-br from-rose-50 to-pink-100 flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition-transform">
+                        <span className={`w-12 h-12 rounded-xl ${colors.bg} flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform ring-1 ring-inset ring-black/5`}>
                           {getEventTypeIcon(event.type)}
                         </span>
                         <div className="min-w-0">
-                          <h3 className="font-bold text-gray-900 truncate leading-tight">{event.name}</h3>
-                          <span className="text-xs text-gray-400 font-medium">{getEventTypeLabel(event.type)}</span>
+                          <h3 className="font-bold text-gray-900 truncate leading-tight text-[15px]">{event.name}</h3>
+                          <span className={`text-xs font-semibold ${colors.text}`}>{getEventTypeLabel(event.type)}</span>
                         </div>
                       </div>
                       {/* Toggle */}
                       <button
                         onClick={() => handleToggleActive(event.id, event.is_active)}
                         disabled={togglingId === event.id}
-                        className={`relative shrink-0 w-11 h-6 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 ${
+                        className={`relative shrink-0 w-11 h-6 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 mt-1 ${
                           event.is_active ? "bg-emerald-500" : "bg-gray-300"
                         } ${togglingId === event.id ? "opacity-50 cursor-wait" : "cursor-pointer"}`}
                         title={event.is_active ? "Desactivar" : "Activar"}
@@ -384,23 +405,23 @@ export default function AdminDashboard() {
                       <div className="flex items-center gap-2 text-sm text-gray-500">
                         <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>
                         <span>{formatDate(event.date)}</span>
-                        <span className={`ml-auto text-xs font-semibold px-2 py-0.5 rounded-full ${
+                        <span className={`ml-auto text-xs font-semibold px-2.5 py-0.5 rounded-full ${
                           isPast
                             ? "bg-gray-100 text-gray-500"
-                            : "bg-amber-50 text-amber-700"
+                            : "bg-emerald-50 text-emerald-700"
                         }`}>
                           {daysUntil(event.date)}
                         </span>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-gray-500">
                         <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m9.86-2.036a4.5 4.5 0 0 0-1.242-7.244l4.5-4.5a4.5 4.5 0 0 1 6.364 6.364l-1.757 1.757" /></svg>
-                        <code className="text-xs bg-gray-50 px-2 py-0.5 rounded-md font-mono text-gray-600 truncate">/e/{event.slug}</code>
+                        <code className={`text-xs ${colors.bg} px-2 py-0.5 rounded-md font-mono ${colors.text} truncate`}>/e/{event.slug}</code>
                       </div>
                     </div>
                   </div>
 
                   {/* Card actions */}
-                  <div className="border-t border-gray-100 px-5 py-3 flex items-center gap-1">
+                  <div className={`border-t ${colors.border} bg-gradient-to-r from-transparent ${colors.bg}/50 to-transparent px-5 py-3 flex items-center gap-1`}>
                     <Link
                       href={`/e/${event.slug}`}
                       target="_blank"
