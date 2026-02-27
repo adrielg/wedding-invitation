@@ -19,6 +19,18 @@ enum EventType {
   other                // Otro
 }
 
+enum PlanType {
+  standard  // Cliente crea su evento
+  premium   // Nosotros lo creamos personalizado
+}
+
+enum PaymentStatus {
+  pending   // Esperando confirmación de MP
+  approved  // Aprobado
+  rejected  // Rechazado
+  refunded  // Devuelto
+}
+
 model Event {
   id          String      @id @default(uuid())
   slug        String      @unique // URL amigable: "boda-juan-maria"
@@ -35,8 +47,28 @@ model Event {
   
   config      EventConfig?
   rsvps       Rsvp[]
+  payment     Payment?    // Relación 1:1 con Payment
   
   @@map("events")
+}
+
+model Payment {
+  id                  String        @id @default(uuid())
+  email               String        // Email del cliente
+  phone               String?       // Teléfono (opcional)
+  plan                PlanType      // standard o premium
+  status              PaymentStatus @default(pending)
+  amount              Float         // Monto pagado
+  mercadopago_id      String?       @unique // ID de pago de MercadoPago
+  preference_id       String?       // ID de preferencia de MP
+  event_id            String?       @unique // NULL si aún no creó evento (premium) o no usó el pago
+  event               Event?        @relation(fields: [event_id], references: [id], onDelete: SetNull)
+  created_at          DateTime      @default(now())
+  updated_at          DateTime      @updatedAt
+  
+  @@map("payments")
+  @@index([email])
+  @@index([mercadopago_id])
 }
 
 model EventConfig {
