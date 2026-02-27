@@ -23,6 +23,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Verificar tipo de credencial
+    const tokenType = process.env.MERCADOPAGO_ACCESS_TOKEN.startsWith('TEST-') ? 'TEST' : 'PROD';
+    console.log(`🔑 Usando credenciales de: ${tokenType}`);
+
     if (!process.env.NEXT_PUBLIC_BASE_URL) {
       console.error("❌ NEXT_PUBLIC_BASE_URL no está configurado");
       return NextResponse.json(
