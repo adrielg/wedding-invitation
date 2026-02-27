@@ -88,13 +88,23 @@ export async function POST(req: NextRequest) {
           currency_id: "ARS",
         },
       ],
+      payer: {
+        email: email || "cliente@email.com",
+        phone: phone ? {
+          area_code: "",
+          number: phone,
+        } : undefined,
+      },
       back_urls: {
         success: successUrl,
         failure: failureUrl,
         pending: pendingUrl,
       },
-      external_reference: payment.id, // Para identificar en webhook
+      statement_descriptor: "RESERVALAFECHA",
+      external_reference: payment.id,
       notification_url: `${baseUrl}/api/payments/webhook`,
+      expires: false,
+      binary_mode: false,
     };
 
     // Solo agregar auto_return en producción (no localhost)
