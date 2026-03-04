@@ -61,3 +61,31 @@ export const TYPES_WITH_FORMAL_MENU: EventTypeValue[] = ["wedding", "fifteen", "
 
 /** Tipos que muestran dress code */
 export const TYPES_WITH_DRESS_CODE: EventTypeValue[] = ["wedding", "fifteen", "corporate"];
+
+/** Temas completos para preview de eventos */
+export const EVENT_THEMES = {
+  wedding: {
+    icon: "💍",
+    colors: { primary: "#f43f5e", secondary: "#ec4899" }
+  },
+  fifteen: {
+    icon: "🎉",
+    colors: { primary: "#d946ef", secondary: "#a855f7" }
+  },
+  adult_birthday: {
+    icon: "🎂",
+    colors: { primary: "#f59e0b", secondary: "#f97316" }
+  },
+  childrens_event: {
+    icon: "🎈",
+    colors: { primary: "#0ea5e9", secondary: "#06b6d4" }
+  },
+  babyshower: {
+    icon: "👶",
+    colors: { primary: "#14b8a6", secondary: "#10b981" }
+  },
+  corporate: {
+    icon: "💼",
+    colors: { primary: "#64748b", secondary: "#52525b" }
+  },
+} as const;

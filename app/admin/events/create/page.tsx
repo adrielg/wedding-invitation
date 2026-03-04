@@ -3,12 +3,15 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import EventPreview from "@/app/components/EventPreview";
 import { EVENT_TYPES, TYPES_WITH_CEREMONY } from "@/lib/constants/event-types";
 
 export default function CreateEventPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [fullscreenPreview, setFullscreenPreview] = useState(false);
 
   // Actualizar título y favicon
   useEffect(() => {
@@ -131,21 +134,26 @@ export default function CreateEventPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 py-10 px-4">
-      <div className="max-w-3xl mx-auto">
-        <div className="mb-6">
-          <Link 
-            href="/admin/dashboard"
-            className="text-rose-600 hover:text-rose-700"
-          >
-            ← Volver al Dashboard
-          </Link>
-        </div>
+    <div className="flex min-h-screen">
+      {/* Formulario - Lado Izquierdo con scroll */}
+      <div className={`bg-gray-50 overflow-y-auto transition-all ${fullscreenPreview ? 'hidden' : 'w-full lg:w-1/2'}`}>
+        <div className="max-w-3xl mx-auto py-10 px-4">
+          <div className="mb-6">
+            <Link 
+              href="/admin/dashboard"
+              className="text-rose-600 hover:text-rose-700 inline-flex items-center gap-2"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+              </svg>
+              Volver al Dashboard
+            </Link>
+          </div>
 
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-8">
-            Crear Nuevo Evento
-          </h1>
+          <div className="bg-white rounded-lg shadow-md p-8">
+            <h1 className="text-3xl font-bold text-gray-800 mb-8">
+              Crear Nuevo Evento
+            </h1>
 
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
@@ -620,8 +628,48 @@ export default function CreateEventPage() {
               </button>
             </div>
           </form>
+          </div>
         </div>
       </div>
-    </main>
+
+      {/* Preview - Lado Derecho fijo */}
+      <div className={`hidden lg:block lg:h-screen lg:sticky lg:top-0 lg:border-l lg:border-gray-300 transition-all ${fullscreenPreview ? 'lg:w-full' : 'lg:w-1/2'}`}>
+        {/* Preview Controls */}
+        <div className="absolute top-4 right-4 z-50 flex gap-2">
+          <button
+            type="button"
+            onClick={() => setFullscreenPreview(!fullscreenPreview)}
+            className="bg-gray-900/90 backdrop-blur-sm border border-gray-700 rounded-lg p-2 text-white hover:bg-gray-800 transition-colors shadow-lg"
+            title={fullscreenPreview ? "Vista dividida" : "Pantalla completa"}
+          >
+            {fullscreenPreview ? (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+              </svg>
+            )}
+          </button>
+        </div>
+        
+        <EventPreview
+          name={formData.name}
+          type={formData.type as any}
+          date={formData.date.split('T')[0]}
+          location={formData.venue_address}
+          description=""
+          venueAddress={formData.venue_address}
+          venueName={formData.venue_name}
+          venueMapUrl={formData.venue_map_url}
+          ceremonyTime={formData.ceremony_time}
+          receptionTime={formData.reception_time}
+          parkingInfo={formData.parking_info}
+          dressCode={formData.dress_code}
+          heroImageUrl={formData.hero_image_url}
+        />
+      </div>
+    </div>
   );
 }

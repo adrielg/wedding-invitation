@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function AdminLogin() {
   const [password, setPassword] = useState("");
@@ -142,10 +143,21 @@ export default function AdminLogin() {
           </div>
         </div>
 
-        {/* Footer */}
-        <p className="text-center text-xs text-gray-600 mt-5">
-          Acceso restringido
-        </p>
+        {/* Footer - Contextual exit */}
+        <div className="text-center mt-6 space-y-2">
+          <p className="text-xs text-gray-600">
+            Acceso restringido
+          </p>
+          <Link 
+            href="/" 
+            className="text-xs text-gray-500 hover:text-gray-400 transition-colors inline-flex items-center gap-1.5 group"
+          >
+            <svg className="w-3 h-3 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+            </svg>
+            Volver al sitio
+          </Link>
+        </div>
       </div>
     </main>
   );
