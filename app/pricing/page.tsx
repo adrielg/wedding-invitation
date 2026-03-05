@@ -120,7 +120,7 @@ export default function PricingPage() {
         {/* Pricing cards */}
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {/* STANDARD */}
-          <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 hover:border-gray-700 transition-all">
+          <div className="flex flex-col bg-gray-900/50 border border-gray-800 rounded-2xl p-8 hover:border-gray-700 transition-all">
             <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 mb-4">
                 <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -135,7 +135,7 @@ export default function PricingPage() {
               <p className="text-gray-400 text-sm">Creá tu evento en 5 minutos y empezá a recibir confirmaciones</p>
             </div>
 
-            <ul className="space-y-3 mb-8">
+            <ul className="flex-1 space-y-3 mb-8">
               {[
                 "Evento listo en 5 minutos",
                 "Diseños profesionales incluidos",
@@ -165,7 +165,7 @@ export default function PricingPage() {
           </div>
 
           {/* PREMIUM */}
-          <div className="bg-gradient-to-br from-rose-900/20 to-violet-900/20 border-2 border-rose-500/50 rounded-2xl p-8 relative overflow-hidden">
+          <div className="flex flex-col bg-gradient-to-br from-rose-900/20 to-violet-900/20 border-2 border-rose-500/50 rounded-2xl p-8 relative overflow-hidden">
             {/* Badge "Recomendado" */}
             <div className="absolute top-4 right-4 bg-gradient-to-r from-rose-500 to-violet-500 text-white text-xs font-bold px-3 py-1 rounded-full">
               ⭐ Recomendado
@@ -185,7 +185,7 @@ export default function PricingPage() {
               <p className="text-gray-400 text-sm">Relajate. Nosotros diseñamos todo por vos</p>
             </div>
 
-            <ul className="space-y-3 mb-8">
+            <ul className="flex-1 space-y-3 mb-8">
               {[
                 "✨ Incluye TODO lo del Plan Standard",
                 "Diseñamos tu evento único",
