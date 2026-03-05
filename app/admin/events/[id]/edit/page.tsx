@@ -820,7 +820,7 @@ export default function EditEventPage() {
       </div>
 
       {/* Fullscreen Preview Modal */}
-        {fullscreenPreview && (
+      {fullscreenPreview && (
           <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm">
             <div className="h-full overflow-y-auto">
               <div className="sticky top-0 z-10 backdrop-blur-xl bg-black/50 border-b border-gray-800/50 px-6 py-4">
@@ -860,6 +860,7 @@ export default function EditEventPage() {
             </div>
           </div>
         )}
+      )}
     </div>
   );
 }
