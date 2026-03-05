@@ -217,13 +217,21 @@ export default function PricingPage() {
 
         {/* FAQ Accordion */}
         <div className="mt-16 max-w-3xl mx-auto">
-          <h3 className="text-2xl font-bold text-center mb-8">Preguntas Frecuentes</h3>
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500/10 to-violet-500/10 border border-rose-500/20 mb-4">
+              <svg className="w-7 h-7 text-rose-400" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+              </svg>
+            </div>
+            <h3 className="text-3xl font-bold mb-2">Preguntas Frecuentes</h3>
+            <p className="text-gray-500 text-sm">Todo lo que necesitás saber antes de empezar</p>
+          </div>
           
           <div className="space-y-3">
             {[
               {
                 q: "¿Cuántos eventos puedo crear con un pago?",
-                a: "Cada pago te permite crear un evento completo. Si necesitás crear más eventos, simplemente realizás otro pago. No hay límite de invitados por evento."
+                a: "Cada pago te permite crear una invitación a tú evento completo. Si necesitás crear más eventos, simplemente realizás otro pago. No hay límite de invitados por evento. Cada evento caduca a los 3 meses de existencia."
               },
               {
                 q: "¿Qué pasa después de pagar el Plan Standard?",
@@ -231,7 +239,7 @@ export default function PricingPage() {
               },
               {
                 q: "¿Cómo funciona el Plan Premium?",
-                a: "Después de pagar, te contactamos por WhatsApp para conocer tu visión. Diseñamos tu evento completamente personalizado y lo entregamos en 24-48hs con tu link + contraseña de admin."
+                a: "Después de pagar, te contactamos por WhatsApp para conocer tu visión. Diseñamos tu evento completamente personalizado y lo entregamos en 24-48hs con tu link + contraseña de admin para gestionar desde un panel de control el evento."
               },
               {
                 q: "¿Puedo editar mi evento después de crearlo?",
@@ -248,25 +256,32 @@ export default function PricingPage() {
             ].map((faq, i) => {
               const [open, setOpen] = useState(false);
               return (
-                <div key={i} className="bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden">
+                <div 
+                  key={i} 
+                  className="group bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden hover:border-gray-700 hover:bg-gray-900/70 transition-all"
+                >
                   <button
                     onClick={() => setOpen(!open)}
-                    className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-800/50 transition-all"
+                    className="w-full px-6 py-5 flex items-center gap-4 text-left transition-all"
                   >
-                    <span className="font-medium text-white pr-4">{faq.q}</span>
-                    <svg 
-                      className={`w-5 h-5 text-gray-400 flex-shrink-0 transition-transform ${open ? 'rotate-180' : ''}`}
-                      fill="none" 
-                      stroke="currentColor" 
-                      strokeWidth={2} 
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                    </svg>
+                    <span className="flex-1 font-semibold text-white text-base group-hover:text-rose-400 transition-colors pr-4">{faq.q}</span>
+                    <div className={`w-8 h-8 rounded-lg bg-gray-800/50 flex items-center justify-center flex-shrink-0 transition-all ${open ? 'bg-rose-500/10 rotate-180' : 'group-hover:bg-gray-800'}`}>
+                      <svg 
+                        className={`w-5 h-5 transition-colors ${open ? 'text-rose-400' : 'text-gray-400'}`}
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth={2.5} 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                      </svg>
+                    </div>
                   </button>
                   {open && (
-                    <div className="px-6 pb-4 text-sm text-gray-400 leading-relaxed">
-                      {faq.a}
+                    <div className="px-6 pb-5 animate-in slide-in-from-top-2 duration-200">
+                      <p className="text-sm text-gray-400 leading-relaxed border-l-2 border-rose-500/30 pl-4">
+                        {faq.a}
+                      </p>
                     </div>
                   )}
                 </div>
