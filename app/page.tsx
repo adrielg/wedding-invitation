@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import WhatsAppFloat from "./components/WhatsAppFloat";
+import Logo from "./components/Logo";
 
 export default function Home() {
   const [visible, setVisible] = useState(false);
@@ -51,9 +53,14 @@ export default function Home() {
         <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-violet-500/[0.04] rounded-full blur-[120px]" />
       </div>
 
+      {/* Logo fijo en header */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-8">
+        <Logo />
+      </div>
+
       {/* ── Hero ── */}
       <section
-        className={`relative z-10 max-w-6xl mx-auto px-6 pt-16 sm:pt-24 pb-20 transition-all duration-1000 ${
+        className={`relative z-10 max-w-6xl mx-auto px-6 pt-8 pb-20 transition-all duration-1000 ${
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
         }`}
       >
@@ -75,8 +82,8 @@ export default function Home() {
 
           {/* Subtitle */}
           <p className="text-lg sm:text-xl text-gray-400 max-w-xl mx-auto mb-10 leading-relaxed">
-            Creamos invitaciones digitales elegantes con confirmación de asistencia 
-            integrada. Sin complicaciones, con resultados increíbles.
+            Invitaciones digitales profesionales con confirmación automática.
+            Sin estrés, sin papel, solo resultados increíbles en minutos.
           </p>
 
           {/* CTA buttons */}
@@ -116,29 +123,29 @@ export default function Home() {
               icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" /></svg>
               ),
-              title: "Diseño a medida",
-              desc: "Cada invitación refleja la personalidad de tu evento con colores y estilos únicos.",
+              title: "Diseño profesional",
+              desc: "Tu evento luce premium. Personalización completa de colores, tipografía e imágenes.",
             },
             {
               icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg>
               ),
-              title: "100% Mobile",
-              desc: "Pensado para celulares. Tus invitados confirman asistencia en segundos.",
+              title: "Móvil primero",
+              desc: "Optimizado para celulares. Tus invitados confirman en 30 segundos, sin apps ni registros.",
             },
             {
               icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" /></svg>
               ),
-              title: "Panel de control",
-              desc: "Seguí las confirmaciones en tiempo real y exportá todo a Excel.",
+              title: "Control total",
+              desc: "Dashboard en vivo. Ved quién confirma al instante y descargá tu lista en Excel.",
             },
             {
               icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg>
               ),
-              title: "Para todo evento",
-              desc: "Casamientos, XV años, cumpleaños, baby showers, corporativos y más.",
+              title: "Todos los eventos",
+              desc: "Bodas, XV años, cumpleaños, baby showers, corporativos. Diseños para cada ocasión.",
             },
           ].map((feature) => (
             <div
@@ -198,13 +205,13 @@ export default function Home() {
         }`}
       >
         <div className="text-center">
-          <p className="text-gray-500 text-sm mb-4">¿Listo para crear tu invitación?</p>
+          <p className="text-gray-500 text-sm mb-4">¿List@ para impresionar a tus invitados?</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
             <Link
               href="/pricing"
               className="group inline-flex items-center gap-2.5 bg-white text-gray-900 px-6 py-3 rounded-xl text-sm font-semibold hover:bg-gray-100 active:scale-[0.98] transition-all"
             >
-              Ver planes y precios
+              Crear mi evento ahora
               <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
             </Link>
             <a
@@ -257,6 +264,9 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* WhatsApp Float Button */}
+      <WhatsAppFloat />
     </main>
   );
 }
