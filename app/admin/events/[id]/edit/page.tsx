@@ -395,7 +395,7 @@ export default function EditEventPage() {
                     </p>
                   </div>
 
-                  {TYPES_WITH_CEREMONY.includes(formData.type) && (
+                  {TYPES_WITH_CEREMONY.includes(formData.type as any) && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -758,31 +758,21 @@ export default function EditEventPage() {
       </div>
 
       {/* Preview Sidebar - Right side */}
-      <div className={`relative overflow-y-auto transition-all ${fullscreenPreview ? 'w-full' : 'hidden lg:block lg:w-1/2'}`}>
-        <div className="max-w-3xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          <div className="sticky top-24">
+      {!fullscreenPreview && (
+        <div className="hidden lg:block lg:w-1/2 relative overflow-y-auto">
+          <div className="max-w-3xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <div className="sticky top-24">
               {/* Fullscreen Toggle */}
               <button
                 type="button"
                 onClick={() => setFullscreenPreview(!fullscreenPreview)}
                 className="w-full mb-4 px-4 py-3 bg-gray-800/50 border border-gray-700/50 text-gray-300 rounded-xl hover:bg-gray-700/50 hover:border-rose-500/50 transition-all duration-200 flex items-center justify-center gap-2 group"
               >
-                {fullscreenPreview ? (
-                  <>
-                    <svg className="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                    Cerrar vista previa
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                    Vista previa completa
-                  </>
-                )}
+                <svg className="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                Vista previa completa
               </button>
 
               {/* Preview Card */}
@@ -797,70 +787,66 @@ export default function EditEventPage() {
                 
                 <div className="p-4 max-h-[calc(100vh-250px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
                   <EventPreview 
-                    eventData={{
-                      name: formData.name || 'Nombre del Evento',
-                      type: formData.type,
-                      date: formData.date,
-                      venue_name: formData.venue_name,
-                      venue_address: formData.venue_address,
-                      venue_map_url: formData.venue_map_url,
-                      ceremony_time: formData.ceremony_time,
-                      reception_time: formData.reception_time,
-                      theme_primary_color: formData.theme_primary_color,
-                      theme_secondary_color: formData.theme_secondary_color,
-                      theme_background: formData.theme_background,
-                      theme_font_family: formData.theme_font_family,
-                      hero_image_url: formData.hero_image_url,
-                    }} 
+                    name={formData.name || 'Nombre del Evento'}
+                    type={formData.type as any}
+                    date={formData.date.split('T')[0]}
+                    location={formData.venue_address}
+                    description=""
+                    venueAddress={formData.venue_address}
+                    venueName={formData.venue_name}
+                    venueMapUrl={formData.venue_map_url}
+                    ceremonyTime={formData.ceremony_time}
+                    receptionTime={formData.reception_time}
+                    parkingInfo={formData.parking_info}
+                    dressCode={formData.dress_code}
+                    heroImageUrl={formData.hero_image_url}
                   />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Fullscreen Preview Modal */}
       {fullscreenPreview && (
-          <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm">
-            <div className="h-full overflow-y-auto">
-              <div className="sticky top-0 z-10 backdrop-blur-xl bg-black/50 border-b border-gray-800/50 px-6 py-4">
-                <div className="flex items-center justify-between max-w-7xl mx-auto">
-                  <h3 className="text-lg font-medium text-white">Vista Previa Completa</h3>
-                  <button
-                    onClick={() => setFullscreenPreview(false)}
-                    className="px-4 py-2 bg-gray-800/50 border border-gray-700/50 text-gray-300 rounded-xl hover:bg-gray-700/50 transition-all flex items-center gap-2"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                    Cerrar
-                  </button>
-                </div>
-              </div>
-              
-              <div className="max-w-7xl mx-auto py-8 px-4">
-                <EventPreview 
-                  eventData={{
-                    name: formData.name || 'Nombre del Evento',
-                    type: formData.type,
-                    date: formData.date,
-                    venue_name: formData.venue_name,
-                    venue_address: formData.venue_address,
-                    venue_map_url: formData.venue_map_url,
-                    ceremony_time: formData.ceremony_time,
-                    reception_time: formData.reception_time,
-                    theme_primary_color: formData.theme_primary_color,
-                    theme_secondary_color: formData.theme_secondary_color,
-                    theme_background: formData.theme_background,
-                    theme_font_family: formData.theme_font_family,
-                    hero_image_url: formData.hero_image_url,
-                  }} 
-                />
+        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm">
+          <div className="h-full overflow-y-auto">
+            <div className="sticky top-0 z-10 backdrop-blur-xl bg-black/50 border-b border-gray-800/50 px-6 py-4">
+              <div className="flex items-center justify-between max-w-7xl mx-auto">
+                <h3 className="text-lg font-medium text-white">Vista Previa Completa</h3>
+                <button
+                  onClick={() => setFullscreenPreview(false)}
+                  className="px-4 py-2 bg-gray-800/50 border border-gray-700/50 text-gray-300 rounded-xl hover:bg-gray-700/50 transition-all flex items-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  Cerrar
+                </button>
               </div>
             </div>
+            
+            <div className="max-w-7xl mx-auto py-8 px-4">
+              <EventPreview 
+                name={formData.name || 'Nombre del Evento'}
+                type={formData.type as any}
+                date={formData.date.split('T')[0]}
+                location={formData.venue_address}
+                description=""
+                venueAddress={formData.venue_address}
+                venueName={formData.venue_name}
+                venueMapUrl={formData.venue_map_url}
+                ceremonyTime={formData.ceremony_time}
+                receptionTime={formData.reception_time}
+                parkingInfo={formData.parking_info}
+                dressCode={formData.dress_code}
+                heroImageUrl={formData.hero_image_url}
+              />
+            </div>
           </div>
-        )}
+        </div>
+      )}
     </div>
   );
 }
