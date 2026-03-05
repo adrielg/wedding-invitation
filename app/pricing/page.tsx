@@ -187,13 +187,13 @@ export default function PricingPage() {
 
             <ul className="space-y-3 mb-8">
               {[
-                "Todo lo del Plan Standard +",
+                "✨ Incluye TODO lo del Plan Standard",
                 "Diseñamos tu evento único",
                 "Te asesoramos por WhatsApp",
                 "Ajustes ilimitados sin cargo",
                 "Agregamos secciones extras",
                 "Galería de fotos profesional",
-                "Respuesta en menos de 2hs",
+                "Respuesta en menos de 24hs",
               ].map((feature) => (
                 <li key={feature} className="flex items-start gap-3 text-sm">
                   <svg className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
