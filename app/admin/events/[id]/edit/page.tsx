@@ -752,11 +752,13 @@ export default function EditEventPage() {
                   </button>
                 )}
               </div>
-              </form>
+            </form>
           </div>
+        </div>
+      </div>
 
-          {/* Preview Sidebar */}
-          <div className="lg:col-span-1">
+      {/* Preview Sidebar - Right side */}
+      <div className={`relative overflow-y-auto transition-all ${fullscreenPreview ? 'w-full' : 'hidden lg:block lg:w-1/2'}`}>
             <div className="sticky top-24">
               {/* Fullscreen Toggle */}
               <button
@@ -815,8 +817,9 @@ export default function EditEventPage() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Fullscreen Preview Modal */}
+      {/* Fullscreen Preview Modal */}
         {fullscreenPreview && (
           <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm">
             <div className="h-full overflow-y-auto">
@@ -857,7 +860,6 @@ export default function EditEventPage() {
             </div>
           </div>
         )}
-      </div>
-    </main>
+    </div>
   );
 }
