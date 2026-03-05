@@ -759,7 +759,8 @@ export default function EditEventPage() {
 
       {/* Preview Sidebar - Right side */}
       <div className={`relative overflow-y-auto transition-all ${fullscreenPreview ? 'w-full' : 'hidden lg:block lg:w-1/2'}`}>
-            <div className="sticky top-24">
+        <div className="max-w-3xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+          <div className="sticky top-24">
               {/* Fullscreen Toggle */}
               <button
                 type="button"
@@ -860,7 +861,6 @@ export default function EditEventPage() {
             </div>
           </div>
         )}
-      )}
     </div>
   );
 }
