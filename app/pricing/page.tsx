@@ -209,7 +209,7 @@ export default function PricingPage() {
               disabled={loading === "premium"}
               className="w-full bg-gradient-to-r from-rose-500 to-violet-500 hover:from-rose-600 hover:to-violet-600 text-white py-3 rounded-xl font-semibold transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading === "premium" ? "Procesando..." : "Quiero servicio premium"}
+              {loading === "premium" ? "Procesando..." : "Solicitar diseño personalizado"}
             </button>
             <p className="text-center text-xs text-gray-500 mt-3">✓ Garantía de satisfacción 100%</p>
           </div>
@@ -231,11 +231,11 @@ export default function PricingPage() {
             {[
               {
                 q: "¿Cuántos eventos puedo crear con un pago?",
-                a: "Cada pago te permite crear una invitación a tú evento completo. Si necesitás crear más eventos, simplemente realizás otro pago. No hay límite de invitados por evento. Cada evento caduca a los 3 meses de existencia."
+                a: "Cada plan corresponde a una invitación digital completa, sin límite de invitados. Si organizás múltiples eventos, necesitarás adquirir un plan independiente para cada uno."
               },
               {
                 q: "¿Qué pasa después de pagar el Plan Standard?",
-                a: "Inmediatamente después del pago, accederás a nuestro wizard de creación donde configurás todo en 4 pasos simples. En 5 minutos tendrás tu evento listo y el link para compartir."
+                a: "Inmediatamente después del pago, accederás a nuestro wizard de creación donde configurás todo en 4 simples pasos. En 5 minutos tendrás tu evento listo y el link para compartir."
               },
               {
                 q: "¿Cómo funciona el Plan Premium?",
@@ -243,15 +243,19 @@ export default function PricingPage() {
               },
               {
                 q: "¿Puedo editar mi evento después de crearlo?",
-                a: "¡Sí! Podés editar todo (fecha, diseño, textos, etc.) desde tu panel de administración cuando quieras. Los cambios se reflejan instantáneamente."
+                a: "¡Sí! Podés editar todo (fecha, diseño, textos, etc.) desde tu panel de administración durante los 6 meses de vigencia. Los cambios se reflejan instantáneamente."
               },
               {
                 q: "¿Los invitados necesitan registrarse?",
                 a: "No. Tus invitados solo entran al link que les compartas, confirman asistencia con su nombre y listo. Cero fricciones."
               },
               {
+                q: "¿Cuánto tiempo queda activo mi evento?",
+                a: "Tu evento permanece activo por 6 meses desde su creación. Esto te da tiempo suficiente para planificar, enviar invitaciones y recibir confirmaciones. Si necesitás extender el plazo, contactanos y lo resolvemos."
+              },
+              {
                 q: "¿Hay algún costo oculto o mensualidad?",
-                a: "Ninguno. Es un pago único por evento. Sin suscripciones, sin sorpresas. Tu evento queda activo permanentemente."
+                a: "Ninguno. Es un pago único por evento por 6 meses de vigencia. Sin suscripciones, sin sorpresas."
               }
             ].map((faq, i) => {
               const [open, setOpen] = useState(false);

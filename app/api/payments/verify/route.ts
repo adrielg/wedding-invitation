@@ -9,6 +9,21 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Payment ID requerido" }, { status: 400 });
     }
 
+    // Modo de prueba en desarrollo
+    if (paymentId.startsWith("test-") && process.env.NODE_ENV === "development") {
+      return NextResponse.json({
+        payment: {
+          id: paymentId,
+          plan: "premium",
+          status: "approved",
+          email: "test@example.com",
+          phone: null,
+          amount: 9999,
+          hasEvent: false,
+        },
+      });
+    }
+
     const payment = await prisma.payment.findUnique({
       where: { id: paymentId },
       include: { event: true },

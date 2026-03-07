@@ -63,6 +63,14 @@ model Payment {
   preference_id       String?       // ID de preferencia de MP
   event_id            String?       @unique // NULL si aún no creó evento (premium) o no usó el pago
   event               Event?        @relation(fields: [event_id], references: [id], onDelete: SetNull)
+  
+  // Campos de onboarding Premium
+  whatsapp            String?       // WhatsApp para contacto
+  event_type          String?       // Tipo de evento del onboarding
+  event_date          DateTime?     // Fecha tentativa del evento
+  brief_message       String?       // Brief del cliente
+  onboarding_completed Boolean      @default(false) // Si completó el formulario post-pago
+  
   created_at          DateTime      @default(now())
   updated_at          DateTime      @updatedAt
   

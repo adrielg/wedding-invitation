@@ -13,6 +13,7 @@ import Timeline from "@/app/components/Timeline";
 import Gallery from "@/app/components/Gallery";
 import Footer from "@/app/components/Footer";
 import { useEventTheme } from "@/lib/hooks/useEventTheme";
+import Logo from "@/app/components/Logo";
 
 interface Event {
   id: string;
@@ -214,13 +215,9 @@ export default function EventPage() {
               : 'No pudimos encontrar el evento que buscás. Verificá el enlace e intentá de nuevo.'}
           </p>
 
-          <a
-            href="/"
-            className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
-            Volver al inicio
-          </a>
+          <div className="flex justify-center">
+            <Logo />
+          </div>
         </motion.div>
       </div>
     );

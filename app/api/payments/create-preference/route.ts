@@ -24,7 +24,9 @@ export async function POST(req: NextRequest) {
     }
 
     // Verificar tipo de credencial
-    const tokenType = process.env.MERCADOPAGO_ACCESS_TOKEN.startsWith('TEST-') ? 'TEST' : 'PROD';
+    const isTest = process.env.MERCADOPAGO_ACCESS_TOKEN.startsWith('TEST-') || 
+                   process.env.NODE_ENV === 'development';
+    const tokenType = isTest ? 'TEST/DEV' : 'PROD';
     console.log(`🔑 Usando credenciales de: ${tokenType}`);
 
     if (!process.env.NEXT_PUBLIC_BASE_URL) {
